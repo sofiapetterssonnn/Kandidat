@@ -1,11 +1,32 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import LogInScreen from './logInScreen.js';
+import { useNavigation } from '@react-navigation/native';
+
+
+
+
+function LogInButton (props) {
+    const navigation = useNavigation()
+    return (
+        
+        <TouchableOpacity style={styles.button} 
+            onPress={() => {
+            //console.log('I am tapped');
+            navigation.navigate('Login')
+            }}
+        >
+            <Text>{props.label}</Text>
+        </TouchableOpacity>
+    );
+}
 
 export default function homeScreen(){
 
     return (<View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
         <StatusBar style="auto" />
+        <LogInButton label='Log in' />
       </View>)
 }
 
@@ -16,4 +37,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    button: {
+        alignItems: 'center',
+        backgroundColor: '#DDDDDD',
+        padding: 10,
+      }
   });
