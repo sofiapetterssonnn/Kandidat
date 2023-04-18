@@ -1,7 +1,26 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { FIRESTORE_DB } from '../../config';
-import { doc, setDoc } from 'firebase/firestore'
+import React from 'react';
+import LogInScreen from './logInScreen.js';
+import { useNavigation } from '@react-navigation/native';
+
+
+
+
+function LogInButton (props) {
+    const navigation = useNavigation()
+    return (
+        
+        <TouchableOpacity style={styles.button} 
+            onPress={() => {
+            //console.log('I am tapped');
+            navigation.navigate('Login')
+            }}
+        >
+            <Text>{props.label}</Text>
+        </TouchableOpacity>
+    );
+}
 
 export default function homeScreen(){
 
@@ -16,9 +35,8 @@ const addDoc = async () => {
 }
 
     return (<View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Button onPress={() => addDoc()} title = "Add Doc"/>
         <StatusBar style="auto" />
+        <LogInButton label='Log in' />
       </View>)
 }
 
@@ -29,4 +47,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    button: {
+        alignItems: 'center',
+        backgroundColor: '#DDDDDD',
+        padding: 10,
+      }
   });
