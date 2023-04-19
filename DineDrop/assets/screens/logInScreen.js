@@ -9,7 +9,7 @@ export default function LogInScreen() {
 
 
   const handleLogin = () => {
-    //KOntrollera användarnamn och lösenord
+    //KOntrollera användarnamn och lösenord , DATABAS? 
     if (username === 'user' && password === 'password'){
       setMessage ('Inloggning lyckades!')
     } else{

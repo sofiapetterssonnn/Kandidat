@@ -18,7 +18,7 @@ export default function SignUpScreen() {
   const [password, setPassword] = useState('');
 
   const handleSignUp = () => {
-    // PÅ nått vis vill vi skicka den inmatade till databas för att skapa ett konto
+    // PÅ nått vis vill vi skicka den inmatade till DATABAS för att skapa ett konto
     console.log('Skapar konto...');
   };
 
