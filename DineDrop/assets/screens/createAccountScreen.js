@@ -26,42 +26,47 @@ export default function SignUpScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Create Account</Text>
+
+      <Text style={styles.label}>First Name:</Text>
       <TextInput
         style={styles.input}
         value={firstName}
         onChangeText={setFirstName}
-        placeholder="First Name"
       />
+
+      <Text style={styles.label}>Last Name:</Text>
       <TextInput
         style={styles.input}
         value={lastName}
         onChangeText={setLastName}
-        placeholder="Last Name"
       />
+
+      <Text style={styles.label}>E-mail:</Text>
       <TextInput 
         style={styles.input}
         value={email}
         onChangeText={setEmail}
-        placeholder="E-mail"
       />
-            <TextInput
+
+      <Text style={styles.label}>Username:</Text>
+      <TextInput
         style={styles.input}
         value={username}
         onChangeText={setUsername}
-        placeholder="Username"
       />
+
+      <Text style={styles.label}>Password:</Text>
       <TextInput
         style={styles.input}
         value={password}
         onChangeText={setPassword}
         secureTextEntry={true}
-        placeholder="Password"
       />
+
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity> 
     </View>
-
   );
 }
 
@@ -74,9 +79,17 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 24,
-    color: 'white',
-    marginBottom: 20,
+    fontSize: 40,
+    color: '#B4D6FF',
+    marginBottom: 30,
+  },
+  label: {
+    color: '#B4D6FF',
+    alignSelf: 'flex-start',
+    marginLeft: '10%',
+    marginBottom: 10,
+    fontSize: 15, 
+    fontWeight: 'bold'
   },
   input: {
     backgroundColor: 'white',
@@ -89,16 +102,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#DBEDD5',
+    backgroundColor: '#B4D6FF',
     borderRadius: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 100,
     marginTop: 20,
   },
   buttonText: {
     color: '#1B2156',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 20,
   },
 });
 

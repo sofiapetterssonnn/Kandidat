@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 36,
-    color: 'white',
-    marginTop: 50,
+    color: '#B4D6FF',
+    marginTop: 10,
     marginBottom: 20,
   },
   input: {
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   button: {
-    backgroundColor: '#DBEDD5',
+    backgroundColor: '#B4D6FF',
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   signUpLink: {
-    color: '#DBEDD5',
+    color: '#B4D6FF',
     fontWeight: 'bold',
     marginLeft: 5,
   },
