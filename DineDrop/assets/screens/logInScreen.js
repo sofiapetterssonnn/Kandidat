@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-export default function logInScreen() {
+export default function LogInScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -53,3 +53,56 @@ export default function logInScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#1B2156',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 36,
+    color: 'white',
+    marginTop: 50,
+    marginBottom: 20,
+  },
+  input: {
+    height: 40,
+    width: '80%',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
+  },
+  button: {
+    backgroundColor: '#DBEDD5',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 20,
+  },
+  buttonText: {
+    color: '#1B2156',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  message: {
+    color: 'white',
+  },
+  signUp: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  signUpText: {
+    color: 'white',
+  },
+  signUpLink: {
+    color: '#DBEDD5',
+    fontWeight: 'bold',
+    marginLeft: 5,
+  },
+});

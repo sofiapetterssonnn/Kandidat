@@ -22,7 +22,7 @@ function LogInButton (props) {
     );
 }
 
-export default function homeScreen(){
+export default function HomeScreen(){
 
 const addDoc = async () => {
   console.log("klickad")
