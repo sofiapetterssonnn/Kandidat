@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 /* useState är en inbyggd funktion i react som används för att skapa tillståndsvariabler i en komponent, vi slkapar firstName, lastName, email, username, password
 Varje tillståndsvariabel håller ett värde och kan uppdateras med hjälp av motsvarande funktion som är tilldelad till den, setFristName, setLastName osv 
@@ -11,6 +12,7 @@ styles - använder denna för att få anpassa layouten
 StyleSheet.create - används för att skapa en StyleSheet-objektför att på så vis definiera stylingen för en komponent i react native*/
 
 export default function SignUpScreen() {
+  const navigation = useNavigation()
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -57,7 +59,9 @@ export default function SignUpScreen() {
         secureTextEntry={true}
         placeholder="Password"
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+      <TouchableOpacity style={styles.button} onPress={() => {
+            navigation.navigate('Main')
+        }}>
         <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity> 
     </View>
