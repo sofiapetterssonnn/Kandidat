@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function LogInScreen() {
+  const navigation = useNavigation()
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -45,8 +48,11 @@ export default function LogInScreen() {
       <Text style={styles.message}>{message}</Text>
       <View style={styles.signUp}>
         <Text style={styles.signUpText}>Don't have an accout?</Text>
-        <TouchableOpacity onPress={handleSignUp}>
-          <Text style={styles.signUpLink}>Sign up here!</Text>
+        
+        <TouchableOpacity onPress={() => {
+            navigation.navigate('CreateAccount')
+        }}>
+        <Text style={styles.signUpLink}>Sign up here!</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
