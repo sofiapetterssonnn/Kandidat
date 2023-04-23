@@ -6,31 +6,29 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LogInScreen from './assets/screens/logInScreen.js';
 import CreateAccountScreen from './assets/screens/createAccountScreen.js';
-import MainScreen from './assets/screens/mainScreen.js';
+import TabsScreen from './assets/screens/tabsScreen.js';
 
 const Stack = createNativeStackNavigator();
-
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        <Stack.Screen /*options={{headerShown: false}}*/
           name="Home"
           component={HomeScreen}
-          options={{title: 'Welcome'}}
         />
-        <Stack.Screen 
+        <Stack.Screen /*options={{headerShown: false}}*/
           name="Login" 
           component={LogInScreen} 
         />
-        <Stack.Screen 
+        <Stack.Screen /*options={{headerShown: false}}*/
           name="CreateAccount" 
           component={CreateAccountScreen} 
         />
-        <Stack.Screen 
-          name="Main" 
-          component={MainScreen} 
+        <Stack.Screen /*options={{headerShown: false}}*/
+          name="Tabs" 
+          component={TabsScreen} 
         />
       </Stack.Navigator>
     </NavigationContainer>
