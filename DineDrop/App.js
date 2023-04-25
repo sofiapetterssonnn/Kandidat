@@ -7,6 +7,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LogInScreen from './assets/screens/logInScreen.js';
 import CreateAccountScreen from './assets/screens/createAccountScreen.js';
 import TabsScreen from './assets/screens/tabsScreen.js';
+import GroupScreen from './assets/screens/GroupScreen.js';
+import PostScreen from './assets/screens/PostScreen.js';
+import ProfileScreen from './assets/screens/ProfileScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +33,19 @@ export default function App() {
           name="Tabs" 
           component={TabsScreen} 
         />
+        <Stack.Screen /*options={{headerShown: false}}*/
+         name="Group"
+         component={GroupScreen}
+       />
+       <Stack.Screen /*options={{headerShown: false}}*/
+         name="Post"
+         component={PostScreen}
+       />
+       <Stack.Screen /*options={{headerShown: false}}*/
+         name="Profile"
+         component={ProfileScreen}
+       />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
