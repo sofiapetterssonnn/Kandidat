@@ -65,7 +65,7 @@ export default function SignUpScreen() {
         secureTextEntry={true}
       />
       <TouchableOpacity style={styles.button} onPress={() => {
-            navigation.navigate('Main')
+            navigation.navigate('Tabs')
         }}>
         <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity> 

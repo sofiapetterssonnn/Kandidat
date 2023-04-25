@@ -7,32 +7,46 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LogInScreen from './assets/screens/logInScreen.js';
 import CreateAccountScreen from './assets/screens/createAccountScreen.js';
-import MainScreen from './assets/screens/mainScreen.js';
+import TabsScreen from './assets/screens/tabsScreen.js';
+import GroupScreen from './assets/screens/GroupScreen.js';
+import PostScreen from './assets/screens/PostScreen.js';
+import ProfileScreen from './assets/screens/ProfileScreen.js';
 
 const Stack = createNativeStackNavigator();
-
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        <Stack.Screen /*options={{headerShown: false}}*/
           name="Home"
           component={HomeScreen}
-          options={{title: 'Welcome'}}
         />
-        <Stack.Screen 
+        <Stack.Screen /*options={{headerShown: false}}*/
           name="Login" 
           component={LogInScreen} 
         />
-        <Stack.Screen 
+        <Stack.Screen /*options={{headerShown: false}}*/
           name="CreateAccount" 
           component={CreateAccountScreen} 
         />
-        <Stack.Screen 
-          name="Main" 
-          component={MainScreen} 
+        <Stack.Screen /*options={{headerShown: false}}*/
+          name="Tabs" 
+          component={TabsScreen} 
         />
+        <Stack.Screen /*options={{headerShown: false}}*/
+         name="Group"
+         component={GroupScreen}
+       />
+       <Stack.Screen /*options={{headerShown: false}}*/
+         name="Post"
+         component={PostScreen}
+       />
+       <Stack.Screen /*options={{headerShown: false}}*/
+         name="Profile"
+         component={ProfileScreen}
+       />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
