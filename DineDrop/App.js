@@ -9,6 +9,7 @@ import TabsScreen from './assets/screens/tabsScreen.js';
 import GroupScreen from './assets/screens/GroupScreen.js';
 import PostScreen from './assets/screens/PostScreen.js';
 import ProfileScreen from './assets/screens/ProfileScreen.js';
+import SettingsScreen from './assets/screens/settingsScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,11 @@ export default function App() {
        <Stack.Screen /*options={{headerShown: false}}*/
          name="Profile"
          component={ProfileScreen}
+       />
+
+       <Stack.Screen /*options={{headerShown: false}}*/
+         name="Settings"
+         component={SettingsScreen}
        />
 
       </Stack.Navigator>
