@@ -1,5 +1,6 @@
 
 
+/*
 import HomeScreen from './assets/screens/homeScreen.js';
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
@@ -29,8 +30,7 @@ export default function App() {
 
 
 
-
-/*import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './assets/screens/homeScreen.js';
 export default function App() {
   return (
@@ -59,3 +59,13 @@ export default function App() {
   );
 }
 */
+
+
+import { StyleSheet, Text, View } from 'react-native';
+import SettingsScreen from './assets/screens/settingsScreen.js';
+
+export default function App() {
+  return (
+  <SettingsScreen />
+  );
+}
