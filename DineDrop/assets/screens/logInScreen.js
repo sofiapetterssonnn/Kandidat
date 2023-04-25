@@ -1,23 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
-
+import { FIREBASE_AUTH } from '../../config';
+import { signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 
 export default function LogInScreen() {
   const navigation = useNavigation()
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
 
+
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        console.log('User is sign in from LogIn Screen')
+        navigation.replace('Tabs')
+      
+      } else {
+        // User is signed out
+
+      }
+    });
+  }, [])
+
+
   const handleLogin = () => {
-    //KOntrollera användarnamn och lösenord , DATABAS? 
-    if (username === 'user' && password === 'password'){
-      setMessage ('Inloggning lyckades!')
-    } else{
-      setMessage ('Incorrect username or password')
-    }
+    signInWithEmailAndPassword(FIREBASE_AUTH, email, password)
+   .then((userCredential) => {
+ 
+   const user = userCredential.user;
+   console.log('Signed in as', user.email)
+   // ...
+   })
+   .catch((error) => {
+     const errorCode = error.code;
+     const errorMessage = error.message;
+     console.log(errorMessage)
+     Alert.alert('Wrong password or email')
+   })
+   // ..
+
+
+
   };
 
 
@@ -31,9 +62,9 @@ export default function LogInScreen() {
       <Text style={styles.title}>LOG IN</Text>
       <TextInput
         style={styles.input}
-        value={username}
-        onChangeText={setUsername}
-        placeholder="Username"
+        value={email}
+        onChangeText={setEmail}
+        placeholder="Email"
       />
       <TextInput
         style={styles.input}

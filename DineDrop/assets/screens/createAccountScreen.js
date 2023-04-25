@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { FIREBASE_AUTH, FIRESTORE_DB } from '../../config';
+import { setDoc, doc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile} from 'firebase/auth';
 
 /* useState är en inbyggd funktion i react som används för att skapa tillståndsvariabler i en komponent, vi slkapar firstName, lastName, email, username, password
 Varje tillståndsvariabel håller ett värde och kan uppdateras med hjälp av motsvarande funktion som är tilldelad till den, setFristName, setLastName osv 
@@ -19,9 +22,54 @@ export default function SignUpScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        console.log('User is signed in from Create Screen')
+        navigation.replace('Tabs')
+       
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+  }, [])
+ 
+
   const handleSignUp = () => {
     // PÅ nått vis vill vi skicka den inmatade till DATABAS för att skapa ett konto
     console.log('Skapar konto...');
+
+    console.log('Skapar konto...');
+    createUserWithEmailAndPassword(FIREBASE_AUTH, email, password)
+    .then(async (userCredential) => {
+     
+      // Signed in
+      const user = userCredential.user;
+      console.log('User created with email: ', user.email)
+     
+      await setDoc(doc(FIRESTORE_DB, "Users", user.uid),{
+        firstname: firstName,
+        lastname: lastName,
+        username: username,
+        email: email,
+      });
+    })
+    .then(()=> {
+        // Uppdatera auth med display name
+      updateProfile(FIREBASE_AUTH.currentUser, {
+      displayName: firstName + ' ' + lastName,
+    });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage)
+    // ..
+    }); 
   };
 
 
@@ -64,9 +112,8 @@ export default function SignUpScreen() {
         onChangeText={setPassword}
         secureTextEntry={true}
       />
-      <TouchableOpacity style={styles.button} onPress={() => {
-            navigation.navigate('Tabs')
-        }}>
+      <TouchableOpacity style={styles.button} onPress={
+        handleSignUp}>
         <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity> 
     </View>

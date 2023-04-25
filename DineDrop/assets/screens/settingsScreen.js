@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { FIREBASE_AUTH } from '../../config';
+import { useNavigation } from '@react-navigation/native';
+import { signOut, deleteUser } from 'firebase/auth';
+import { deleteDoc, doc } from "firebase/firestore";
+import { FIRESTORE_DB } from '../../config';
 
 /*handleSaveChanges sparar uppdateringarna till databasen, 
 handleLogout loggar ut användaren,
@@ -18,14 +23,24 @@ export default function SettingsScreen() {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  const navigation = useNavigation()
+
   const handleSaveChanges = () => {
     // Skicka uppdaterade uppgifterna till DATABASEN!!
     console.log('Sparar ändringar...');
   };
 
   const handleLogout = () => {
-    // Här loggas användaren ut
     console.log('Loggar ut...');
+    signOut(FIREBASE_AUTH).then(() => {
+      console.log('Signed out')
+      navigation.replace('Login')
+     
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+   
   };
 
   const handleDeleteAccount = () => {
@@ -42,6 +57,21 @@ export default function SettingsScreen() {
           onPress: () => {
             // Radera kontot och logga ut användaren
             console.log('Raderar konto och loggar ut...');
+            const user = FIREBASE_AUTH.currentUser;
+
+            //Delete in authentication
+            deleteUser(user).then(async () => {
+
+              //Delete in firestore
+              await deleteDoc(doc(FIRESTORE_DB, "Users", user.uid));
+               navigation.replace('Login')
+
+               // User deleted.
+             }).catch((error) => {
+               const errorMessage = error.message;
+               console.log(errorMessage)
+             });
+
           },
           style: 'destructive',
         },
