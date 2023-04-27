@@ -17,36 +17,36 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen /*options={{headerShown: false}}*/
+        <Stack.Screen options={{headerShown: false}}
           name="Home"
           component={HomeScreen}
         />
-        <Stack.Screen /*options={{headerShown: false}}*/
+        <Stack.Screen options={{headerShown: false}}
           name="Login" 
           component={LogInScreen} 
         />
-        <Stack.Screen /*options={{headerShown: false}}*/
+        <Stack.Screen options={{headerShown: false}}
           name="CreateAccount" 
           component={CreateAccountScreen} 
         />
-        <Stack.Screen /*options={{headerShown: false}}*/
+        <Stack.Screen options={{headerShown: false}}
           name="Tabs" 
           component={TabsScreen} 
         />
-        <Stack.Screen /*options={{headerShown: false}}*/
+        <Stack.Screen options={{headerShown: false}}
          name="Group"
          component={GroupScreen}
        />
-       <Stack.Screen /*options={{headerShown: false}}*/
+       <Stack.Screen options={{headerShown: false}}
          name="Post"
          component={PostScreen}
        />
-       <Stack.Screen /*options={{headerShown: false}}*/
+       <Stack.Screen options={{headerShown: false}}
          name="Profile"
          component={ProfileScreen}
        />
 
-       <Stack.Screen /*options={{headerShown: false}}*/
+       <Stack.Screen options={{headerShown: false}}
          name="Settings"
          component={SettingsScreen}
        />
