@@ -10,6 +10,7 @@ import GroupScreen from './assets/screens/GroupScreen.js';
 import PostScreen from './assets/screens/PostScreen.js';
 import ProfileScreen from './assets/screens/ProfileScreen.js';
 import SettingsScreen from './assets/screens/settingsScreen.js';
+import NewRoomScreen from './assets/screens/NewRoomScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +51,7 @@ export default function App() {
          name="Settings"
          component={SettingsScreen}
        />
+       <Stack.Screen name="NewRoom" component={NewRoomScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>
