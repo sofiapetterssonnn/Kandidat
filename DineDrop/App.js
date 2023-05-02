@@ -8,8 +8,9 @@ import CreateAccountScreen from './assets/screens/createAccountScreen.js';
 import TabsScreen from './assets/screens/tabsScreen.js';
 import GroupScreen from './assets/screens/GroupScreen.js';
 import PostScreen from './assets/screens/PostScreen.js';
-import ProfileScreen from './assets/screens/ProfileScreen.js';
+import ProfileScreen from './assets/screens/profileScreen.js';
 import SettingsScreen from './assets/screens/settingsScreen.js';
+import MapScreen from './assets/screens/mapScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,8 +19,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen /*options={{headerShown: false}}*/
-          name="Home"
-          component={HomeScreen}
+          name="Map"
+          component={MapScreen}
         />
         <Stack.Screen /*options={{headerShown: false}}*/
           name="Login" 
