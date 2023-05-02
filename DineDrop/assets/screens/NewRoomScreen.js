@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../config';
+import { getAuth } from 'firebase/auth';
 import { query, where, getDocs } from "firebase/firestore";
 
 /*handleSaveRoom" används för att spara rummet och navigera tillbaka till föregående skärm
@@ -14,14 +15,20 @@ FlatList är en komponent som används för att visa en lista med data
 data-egenskapen är en array med objekt som innehåller information om varje sökresultat
 renderItem är en funktion som bestämmer hur varje objekt ska visas i listan
 keyExtractor används för att ge varje objekt en unik ID som React kan använda för att hantera uppdateringar av listan mer effektivt*/
-const users = [];
-const userInitials = [];
+
+
+
 
 export default function NewRoomScreen({ navigation }) {
   const [roomName, setRoomName] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   
+  const userInitials = [];
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const users = [user.uid];
+
   console.log(users)
 
   const handleSaveRoom = async () => {
@@ -51,9 +58,11 @@ export default function NewRoomScreen({ navigation }) {
       
     });
 
-    searchResults(
-      
-    )
+    setSearchResults([
+      { id: 1, name: userInitials[0] },
+      { id: 2, name: userInitials[1] },
+    
+    ]);
   
 
 
@@ -63,9 +72,6 @@ export default function NewRoomScreen({ navigation }) {
     return (
       <View style={styles.searchResult}>
         <Text>{item.name}</Text>
-        <TouchableOpacity style={styles.addButton}>
-          <Text style={styles.addButtonText}>Add</Text>
-        </TouchableOpacity>
       </View>
     );
   };
