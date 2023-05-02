@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { addDoc, collection } from 'firebase/firestore';
+import { FIRESTORE_DB } from '../../config';
+import { query, where, getDocs } from "firebase/firestore";
 
 /*handleSaveRoom" används för att spara rummet och navigera tillbaka till föregående skärm
 "handleSearch" används för att söka efter användare och 
@@ -11,30 +14,49 @@ FlatList är en komponent som används för att visa en lista med data
 data-egenskapen är en array med objekt som innehåller information om varje sökresultat
 renderItem är en funktion som bestämmer hur varje objekt ska visas i listan
 keyExtractor används för att ge varje objekt en unik ID som React kan använda för att hantera uppdateringar av listan mer effektivt*/
-
+const users = [];
+const userInitials = [];
 
 export default function NewRoomScreen({ navigation }) {
   const [roomName, setRoomName] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  
+  console.log(users)
 
-  const handleSaveRoom = () => {
+  const handleSaveRoom = async () => {
     // lägg till för att spara rummet
-    // (t.ex. skicka data till en API eller en backend-server) 
+    const docRef = await addDoc(collection(FIRESTORE_DB, "Rooms"), {
+      Name: roomName,
+      Users: users
+    });
+    console.log("Document written with ID: ", docRef.id);
+    
     // och navigera tillbaka till GroupScreen
     navigation.goBack();
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     // lägg till för att söka efter användare
-    // t.ex. skicka en förfrågan till en API eller databas
     // och uppdatera searchResults med resultaten
-    setSearchResults([
-      { id: 1, name: 'Maja' },
-      { id: 2, name: 'Vendela' },
-      { id: 3, name: 'Sofia' },
-      { id: 4, name: 'Minna' },
-    ]);
+    
+    const q = query(collection(FIRESTORE_DB, "Users"), where("username", "==", searchTerm));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      users.push(doc.id)
+      userInitials.push([doc.data().firstname[0], doc.data().lastname[0]])
+      console.log('USERS', users)
+      console.log(userInitials)
+      
+    });
+
+    searchResults(
+      
+    )
+  
+
+
   };
 
   const renderSearchResult = ({ item }) => {
@@ -69,11 +91,13 @@ export default function NewRoomScreen({ navigation }) {
           <Text style={styles.searchButtonText}>Search</Text>
         </TouchableOpacity>
       </View>
+    
       <FlatList
         data={searchResults}
         renderItem={renderSearchResult}
         keyExtractor={item => item.id.toString()}
       />
+      
       <TouchableOpacity style={styles.button} onPress={handleSaveRoom}>
         <Text style={styles.buttonText}>Save Room</Text>
       </TouchableOpacity>

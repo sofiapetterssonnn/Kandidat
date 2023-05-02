@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { doc, getDoc } from "firebase/firestore"; 
+import { FIRESTORE_DB } from '../../config';
 
 
 
@@ -11,9 +13,11 @@ function LogInButton (props) {
     return (
         
         <TouchableOpacity style={styles.button} 
-            onPress={() => {
+          onPress={async () => {
+            
             //console.log('I am tapped');
             navigation.navigate('Login')
+            
             }}
         >
             <Text>{props.label}</Text>

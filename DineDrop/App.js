@@ -8,7 +8,7 @@ import CreateAccountScreen from './assets/screens/createAccountScreen.js';
 import TabsScreen from './assets/screens/tabsScreen.js';
 import GroupScreen from './assets/screens/GroupScreen.js';
 import PostScreen from './assets/screens/PostScreen.js';
-import ProfileScreen from './assets/screens/ProfileScreen.js';
+import ProfileScreen from './assets/screens/profileScreen.js';
 import SettingsScreen from './assets/screens/settingsScreen.js';
 import NewRoomScreen from './assets/screens/NewRoomScreen.js';
 
