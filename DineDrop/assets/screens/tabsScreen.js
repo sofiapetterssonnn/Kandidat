@@ -10,7 +10,7 @@ import { StyleSheet,  Text, View, TouchableOpacity  } from 'react-native';
 
 import GroupScreen from './GroupScreen.js';
 import PostScreen from './PostScreen.js';
-import ProfileScreen from './ProfileScreen.js';
+import ProfileScreen from './profileScreen.js';
 const Tab = createBottomTabNavigator();
 
 
