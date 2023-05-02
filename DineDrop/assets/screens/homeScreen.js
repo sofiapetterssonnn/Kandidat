@@ -1,7 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Animated} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import { useNavigation } from '@react-navigation/native';
+
+import OnboardingItem from '../components/OnboardingItem';
+import slides from '../components/slides';
+import Paginator from  "../components/paginator";
 
 
 
@@ -9,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 function LogInButton (props) {
     const navigation = useNavigation()
     return (
-        
+
         <TouchableOpacity style={styles.button} 
             onPress={() => {
             //console.log('I am tapped');
@@ -33,11 +37,42 @@ const addDoc = async () => {
   );
 }
 
+const [currentIndex, setCurrentIndex] = useState(0)
+const scrollx = useRef(new Animated.Value(0)).current;
+
+const viewableItemsChanged = useRef(({viewableItems}) => {
+  setCurrentIndex(viewableItems[0].index);
+}).current;
+
+const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
+
     return (<View style={styles.container}>
+      <View style={{ flex: 3}}>
+
+        <FlatList 
+          data={slides} 
+          renderItem={({item}) => <OnboardingItem item= {item}/>}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          bounces={false}
+          keyExtractor={(item) => item.id}
+          onScroll={Animated.event([{nativeEvent: {contentOffset: {x:scrollx}}}], {
+            useNativeDriver: false,
+          })}
+
+          scrollEventThrottle={32}
+          onViewableItemsChanged={viewableItemsChanged}
+          viewabilityConfig={viewConfig}
+          //ref={slidesRef}
+          />
+      </View>
+        <Paginator data={slides} scrollx={scrollx}/>
         <StatusBar style="auto" />
         <LogInButton label='Log in' />
-      </View>)
-}
+      </View>
+      );
+};
 
 const styles = StyleSheet.create({
     container: {
