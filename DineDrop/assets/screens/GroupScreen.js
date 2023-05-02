@@ -1,20 +1,45 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-export default function GroupScreen(){
-    return(
-        <View style={styles.container}>
-            <Text>Group Screen</Text>
-        </View>
-        
-    );
+export default function GroupScreen({ navigation }) {
+  const handleCreateNewRoom = () => {
+    navigation.navigate('NewRoom');
+  };
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={handleCreateNewRoom}>
+        <Text style={styles.buttonText}>Create New Room</Text>
+      </TouchableOpacity> 
+      <Text style={[styles.title, { textAlign: 'center' }]}>My Rooms</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#1B2156',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }
+  container: {
+    flex: 1,
+    backgroundColor: '#1B2156',
+    alignItems: 'center',
+    paddingTop: 50,
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: '#B4D6FF',
+    marginBottom: 30,
+  },
+  button: {
+    backgroundColor: '#B4D6FF',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: '#1B2156',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });
