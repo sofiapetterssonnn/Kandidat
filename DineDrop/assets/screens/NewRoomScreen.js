@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../config';
 import { getAuth } from 'firebase/auth';
@@ -18,6 +18,7 @@ renderItem är en funktion som bestämmer hur varje objekt ska visas i listan
 keyExtractor används för att ge varje objekt en unik ID som React kan använda för att hantera uppdateringar av listan mer effektivt*/
 const userInitials = [];
 
+const colors = ['#9CDAD2', '#F6C3DC', '#FFEDAC', '#F5CBA4', '#B6BDFF'];
 
 
 export default function NewRoomScreen() {
@@ -28,21 +29,30 @@ export default function NewRoomScreen() {
   const [searchResults, setSearchResults] = useState([]);
   const [users, setUsers] = useState([user.uid]);
   const [userInitials, setUserInitials] = useState([]);
+  const [bgColor, setBgColor] = useState(colors[0]);
 
   const navigation = useNavigation()
 
+  const changeBgColor = () => {
+    const index = Math.floor(Math.random() * colors.length);
+    setBgColor(colors[index]);
+  };
 
   const handleSaveRoom = async () => {
     // lägg till för att spara rummet
     console.log('Users saved:', users)
     console.log('Initials saved: ', userInitials)
+    if(roomName!=''){
       const docRef = await addDoc(collection(FIRESTORE_DB, "Rooms"), {
-      Name: roomName,
-      Users: users
-    });
-    
-    // och navigera tillbaka till GroupScreen
-    navigation.replace('Group')  
+        Name: roomName,
+        Users: users
+      });
+      navigation.goBack('Group')  
+    }
+    else{
+      Alert.alert('Enter room name')
+    }
+      
   };
 
   const handleSearch = async () => {
@@ -54,19 +64,26 @@ export default function NewRoomScreen() {
     const newUserInitials = [];
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      
-      if(doc.id != user.uid){
+     
+      if(doc.id == user.uid){
+        Alert.alert('Thats you')
+      }
+      else if(users.includes(doc.id) ){
+        Alert.alert('Already added')
+      }
+      else{
         newUser.push(doc.id)
         newUserInitials.push([doc.data().firstname[0], doc.data().lastname[0]])
         console.log('New user', newUser)
         console.log('New user initials' , newUserInitials)
-      }
-      else{
-        console.log('Thats you')
+        changeBgColor() 
+        setSearchTerm('')
+        
       }
     });
     setUsers(users=>[...users, ...newUser])
     setUserInitials(userInitials=>[...userInitials, ...newUserInitials]);
+
     
   };
 
@@ -107,17 +124,18 @@ export default function NewRoomScreen() {
         keyExtractor={item => item.id.toString()}
       />
        */}
-
-      {userInitials.map((item, index) => (
-        <View style={styles.initials} key={index}>
-          <Text style={styles.initialsText} >{item[0].toString()}{item[1].toString()}</Text>
-        </View>
-      ))}
-
-
-      <TouchableOpacity style={styles.saveButton} onPress={handleSaveRoom}>
-        <Text style={styles.saveButtonText}>Save Room</Text>
-      </TouchableOpacity>
+      <View style={styles.initialsContainer}>
+        {userInitials.map((item, index) => (
+          <View style={[styles.initials, { backgroundColor: bgColor }]} key={index}>
+            <Text style={styles.initialsText} >{item[0].toString()}{item[1].toString()}</Text>
+          </View>
+        ))}
+      </View>
+      <View style={styles.saveContainer}>
+        <TouchableOpacity style={styles.saveButton} onPress={handleSaveRoom}>
+          <Text style={styles.saveButtonText}>Save Room</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -141,12 +159,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginBottom: 20,
   },
+  saveContainer:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: '5%',
+    left: '5%',
+    right: '5%',
+  },
   saveButton: {
-    backgroundColor: '#B4D6FF',
+    
+    width: '100%',
+    height: 40,
     borderRadius: 20,
+    backgroundColor: '#B4D6FF',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginTop: "80%",
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    
 },
   saveButtonText: {
     color: '#1B2156',
@@ -177,13 +210,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  initialsContainer:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   initials:{
-    backgroundColor: '#F6C3DC',
+    //backgroundColor: '#F6C3DC',
     borderRadius: 50,
     width: 50,
     height: 50,
-    marginTop: 10,
-    marginBottom: 20 
+    margin: 20,
   },  
   initialsText:{
     color: '#1B2156',
