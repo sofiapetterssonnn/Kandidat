@@ -11,6 +11,7 @@ import PostScreen from './assets/screens/PostScreen.js';
 import ProfileScreen from './assets/screens/profileScreen.js';
 import SettingsScreen from './assets/screens/settingsScreen.js';
 import NewRoomScreen from './assets/screens/NewRoomScreen.js';
+import MapScreen from './assets/screens/mapScreen.js';
 
 const Stack = createNativeStackNavigator();
 
