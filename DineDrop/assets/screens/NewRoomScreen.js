@@ -15,7 +15,7 @@ FlatList är en komponent som används för att visa en lista med data
 data-egenskapen är en array med objekt som innehåller information om varje sökresultat
 renderItem är en funktion som bestämmer hur varje objekt ska visas i listan
 keyExtractor används för att ge varje objekt en unik ID som React kan använda för att hantera uppdateringar av listan mer effektivt*/
-
+const userInitials = [];
 
 
 
@@ -24,7 +24,6 @@ export default function NewRoomScreen({ navigation }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   
-  const userInitials = [];
   const auth = getAuth();
   const user = auth.currentUser;
   const users = [user.uid];

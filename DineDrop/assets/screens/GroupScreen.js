@@ -58,7 +58,10 @@ export default function GroupScreen({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={handleCreateNewRoom}>
         <Text style={styles.buttonText}>Create New Room</Text>
       </TouchableOpacity> 
-      <Text style={[styles.title, { textAlign: 'center' }]}>My Rooms</Text>
+      <Text style={[styles.title, { textAlign: 'center' }]}>My rooms</Text>
+        {rooms.map((item, index) => (
+          <Text key={index}>{item}</Text>
+        ))}
     </View>
   );
 }
