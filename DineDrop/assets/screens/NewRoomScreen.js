@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { addDoc, collection } from 'firebase/firestore';
+import { FIRESTORE_DB } from '../../config';
+import { getAuth } from 'firebase/auth';
+import { query, where, getDocs } from "firebase/firestore";
+import { useNavigation } from '@react-navigation/native';
 
 /*handleSaveRoom" används för att spara rummet och navigera tillbaka till föregående skärm
 "handleSearch" används för att söka efter användare och 
@@ -11,43 +16,69 @@ FlatList är en komponent som används för att visa en lista med data
 data-egenskapen är en array med objekt som innehåller information om varje sökresultat
 renderItem är en funktion som bestämmer hur varje objekt ska visas i listan
 keyExtractor används för att ge varje objekt en unik ID som React kan använda för att hantera uppdateringar av listan mer effektivt*/
+const userInitials = [];
 
 
-export default function NewRoomScreen({ navigation }) {
+
+export default function NewRoomScreen() {
+  const auth = getAuth();
+  const user = auth.currentUser;
   const [roomName, setRoomName] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [users, setUsers] = useState([user.uid]);
+  const [userInitials, setUserInitials] = useState([]);
 
-  const handleSaveRoom = () => {
+  const navigation = useNavigation()
+
+
+  const handleSaveRoom = async () => {
     // lägg till för att spara rummet
-    // (t.ex. skicka data till en API eller en backend-server) 
+    console.log('Users saved:', users)
+    console.log('Initials saved: ', userInitials)
+      const docRef = await addDoc(collection(FIRESTORE_DB, "Rooms"), {
+      Name: roomName,
+      Users: users
+    });
+    
     // och navigera tillbaka till GroupScreen
-    navigation.goBack();
+    navigation.replace('Group')  
   };
 
-  const handleSearch = () => {
-    // lägg till för att söka efter användare
-    // t.ex. skicka en förfrågan till en API eller databas
-    // och uppdatera searchResults med resultaten
-    setSearchResults([
-      { id: 1, name: 'Maja' },
-      { id: 2, name: 'Vendela' },
-      { id: 3, name: 'Sofia' },
-      { id: 4, name: 'Minna' },
-    ]);
+  const handleSearch = async () => {
+    //söka efter användare
+  
+    const q = query(collection(FIRESTORE_DB, "Users"), where("username", "==", searchTerm));
+    const querySnapshot = await getDocs(q);
+    const newUser = [];
+    const newUserInitials = [];
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      
+      if(doc.id != user.uid){
+        newUser.push(doc.id)
+        newUserInitials.push([doc.data().firstname[0], doc.data().lastname[0]])
+        console.log('New user', newUser)
+        console.log('New user initials' , newUserInitials)
+      }
+      else{
+        console.log('Thats you')
+      }
+    });
+    setUsers(users=>[...users, ...newUser])
+    setUserInitials(userInitials=>[...userInitials, ...newUserInitials]);
+    
   };
 
-  const renderSearchResult = ({ item }) => {
+
+ /*  const renderSearchResult = ({ item }) => {
     return (
       <View style={styles.searchResult}>
         <Text>{item.name}</Text>
-        <TouchableOpacity style={styles.addButton}>
-          <Text style={styles.addButtonText}>Add</Text>
-        </TouchableOpacity>
       </View>
     );
   };
-
+ */
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Room Name:</Text>
@@ -69,13 +100,23 @@ export default function NewRoomScreen({ navigation }) {
           <Text style={styles.searchButtonText}>Search</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
+    
+     {/*  <FlatList
         data={searchResults}
         renderItem={renderSearchResult}
         keyExtractor={item => item.id.toString()}
       />
-      <TouchableOpacity style={styles.button} onPress={handleSaveRoom}>
-        <Text style={styles.buttonText}>Save Room</Text>
+       */}
+
+      {userInitials.map((item, index) => (
+        <View style={styles.initials} key={index}>
+          <Text style={styles.initialsText} >{item[0].toString()}{item[1].toString()}</Text>
+        </View>
+      ))}
+
+
+      <TouchableOpacity style={styles.saveButton} onPress={handleSaveRoom}>
+        <Text style={styles.saveButtonText}>Save Room</Text>
       </TouchableOpacity>
     </View>
   );
@@ -100,40 +141,55 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginBottom: 20,
   },
-  button: {
+  saveButton: {
     backgroundColor: '#B4D6FF',
     borderRadius: 20,
     paddingVertical: 10,
-paddingHorizontal: 20,
-marginTop: 20,
+    paddingHorizontal: 20,
+    marginTop: "80%",
 },
-buttonText: {
-color: '#1B2156',
-fontWeight: 'bold',
-fontSize: 16,
-},
-searchContainer: {
-flexDirection: 'row',
-alignItems: 'center',
-marginBottom: 20,
-},
-searchInput: {
-backgroundColor: '#FFF',
-borderRadius: 10,
-paddingVertical: 10,
-paddingHorizontal: 20,
-flex: 1,
-marginRight: 10,
-},
-searchButton: {
-backgroundColor: '#B4D6FF',
-borderRadius: 20,
-paddingVertical: 10,
-paddingHorizontal: 20,
-},
-searchButtonText: {
-color: '#1B2156',
-fontWeight: 'bold',
-fontSize: 16,
-},
+  saveButtonText: {
+    color: '#1B2156',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  searchInput: {
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    flex: 1,
+    marginRight: 10,
+  },
+  searchButton: {
+    backgroundColor: '#B4D6FF',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  searchButtonText: {
+    color: '#1B2156',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  initials:{
+    backgroundColor: '#F6C3DC',
+    borderRadius: 50,
+    width: 50,
+    height: 50,
+    marginTop: 10,
+    marginBottom: 20 
+  },  
+  initialsText:{
+    color: '#1B2156',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight:50
+  }
 });

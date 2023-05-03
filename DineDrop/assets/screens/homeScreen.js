@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList, Animated} from 'rea
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useRef} from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { doc, getDoc } from "firebase/firestore"; 
+import { FIRESTORE_DB } from '../../config';
 
 import OnboardingItem from '../components/OnboardingItem';
 import slides from '../components/slides';
@@ -15,9 +17,11 @@ function LogInButton (props) {
     return (
 
         <TouchableOpacity style={styles.button} 
-            onPress={() => {
+          onPress={async () => {
+            
             //console.log('I am tapped');
             navigation.navigate('Login')
+            
             }}
         >
             <Text style={styles.buttonText}>LOG IN</Text>
@@ -27,15 +31,6 @@ function LogInButton (props) {
 
 export default function HomeScreen(){
 
-const addDoc = async () => {
-  console.log("klickad")
-  await setDoc(doc(FIRESTORE_DB, "cities", "AZ"),{
-    name: "Los Angeles",
-    state: "CA",
-    country: "USA"
-  }
-  );
-}
 
 const [currentIndex, setCurrentIndex] = useState(0)
 const scrollx = useRef(new Animated.Value(0)).current;
