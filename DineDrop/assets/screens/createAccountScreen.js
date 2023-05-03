@@ -5,6 +5,8 @@ import { FIREBASE_AUTH, FIRESTORE_DB } from '../../config';
 import { setDoc, doc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile} from 'firebase/auth';
 
+import { AntDesign } from '@expo/vector-icons';
+
 /* useState är en inbyggd funktion i react som används för att skapa tillståndsvariabler i en komponent, vi slkapar firstName, lastName, email, username, password
 Varje tillståndsvariabel håller ett värde och kan uppdateras med hjälp av motsvarande funktion som är tilldelad till den, setFristName, setLastName osv 
 handleSignUp ska hantera när användaren trycker på "Create Account knappen , loggar detta
@@ -13,6 +15,21 @@ TextInput - inbyggd komponent i react native, används för att skapa inmatnings
 TouchableOpacity - inbyggd komponent i react native, används för att skapa klickbar knapp
 styles - använder denna för att få anpassa layouten 
 StyleSheet.create - används för att skapa en StyleSheet-objektför att på så vis definiera stylingen för en komponent i react native*/
+
+function GoBackButton (props) {
+  const navigation = useNavigation()
+  return (
+
+      <TouchableOpacity style={styles.goBackButton} 
+          onPress={() => {
+          //console.log('I am tapped');
+          navigation.navigate('Login')
+          }}
+      >
+          <AntDesign name="left" size={30} color="white" />
+      </TouchableOpacity>
+  );
+}
 
 export default function SignUpScreen() {
   const navigation = useNavigation()
@@ -75,6 +92,7 @@ export default function SignUpScreen() {
 
   return (
     <View style={styles.container}>
+        <GoBackButton/>
       <Text style={styles.title}>Create Account</Text>
 
       <Text style={styles.label}>First Name:</Text>
@@ -162,6 +180,14 @@ const styles = StyleSheet.create({
     color: '#1B2156',
     fontWeight: 'bold',
     fontSize: 20,
+  },
+  goBackButton:{
+    backgroundColor: 'transparent',
+    marginEnd: 300,
+    marginBottom: 40,
+
+
+
   },
 });
 

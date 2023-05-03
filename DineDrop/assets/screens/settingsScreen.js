@@ -6,6 +6,8 @@ import { signOut, deleteUser } from 'firebase/auth';
 import { deleteDoc, doc } from "firebase/firestore";
 import { FIRESTORE_DB } from '../../config';
 
+import { AntDesign } from '@expo/vector-icons';
+
 /*handleSaveChanges sparar uppdateringarna till databasen, 
 handleLogout loggar ut användaren,
 handleDeleteAccount raderar kontot (med en bekräftelse från användaren).
@@ -16,6 +18,21 @@ och en TextInput-komponent där användaren kan mata in sin nya information
 TouchableOpacity-komponenter som fungerar som knappar. 
 Varje knapp har en annan funktion beroende på vad den heter. 
 De är stylade med hjälp av StyleSheet */
+
+function GoBackButton (props) {
+  const navigation = useNavigation()
+  return (
+
+      <TouchableOpacity style={styles.goBackButton} 
+          onPress={() => {
+          //console.log('I am tapped');
+          navigation.navigate('Tabs')
+          }}
+      >
+          <AntDesign name="left" size={30} color="white" />
+      </TouchableOpacity>
+  );
+}
 
 export default function SettingsScreen() {
   const [username, setUsername] = useState(''); /*Kanske inte kunna ändra */
@@ -81,6 +98,7 @@ export default function SettingsScreen() {
 
   return (
     <View style={styles.container}>
+      <GoBackButton/>
       <Text style={styles.title}>Settings</Text>    
       <Text style={styles.label}>Username</Text>
       <TextInput
@@ -177,5 +195,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+    },
+    goBackButton:{
+      backgroundColor: 'transparent',
+      marginEnd: 300,
+      marginBottom: 40,
+  
+  
+  
     },
     });

@@ -27,15 +27,6 @@ function LogInButton (props) {
 
 export default function HomeScreen(){
 
-const addDoc = async () => {
-  console.log("klickad")
-  await setDoc(doc(FIRESTORE_DB, "cities", "AZ"),{
-    name: "Los Angeles",
-    state: "CA",
-    country: "USA"
-  }
-  );
-}
 
 const [currentIndex, setCurrentIndex] = useState(0)
 const scrollx = useRef(new Animated.Value(0)).current;
