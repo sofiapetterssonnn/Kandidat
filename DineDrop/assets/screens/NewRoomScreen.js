@@ -4,6 +4,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../config';
 import { getAuth } from 'firebase/auth';
 import { query, where, getDocs } from "firebase/firestore";
+import { useNavigation } from '@react-navigation/native';
 
 /*handleSaveRoom" används för att spara rummet och navigera tillbaka till föregående skärm
 "handleSearch" används för att söka efter användare och 
@@ -19,17 +20,16 @@ const userInitials = [];
 
 
 
-export default function NewRoomScreen({ navigation }) {
+export default function NewRoomScreen() {
   const [roomName, setRoomName] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  
+  const navigation = useNavigation()
+
   const auth = getAuth();
   const user = auth.currentUser;
   const users = [user.uid];
-
-  console.log(users)
-
+ 
   const handleSaveRoom = async () => {
     // lägg till för att spara rummet
     const docRef = await addDoc(collection(FIRESTORE_DB, "Rooms"), {
@@ -39,7 +39,7 @@ export default function NewRoomScreen({ navigation }) {
     console.log("Document written with ID: ", docRef.id);
     
     // och navigera tillbaka till GroupScreen
-    navigation.goBack();
+    navigation.navigate('Group')
   };
 
   const handleSearch = async () => {

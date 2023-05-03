@@ -16,38 +16,43 @@ När användaren trycker på knappen för att skapa ett nytt rum anropas funktio
 som navigerar användaren till en annan skärm som heter NewRoom.
 */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { getAuth } from "firebase/auth";
 import { FIRESTORE_DB } from '../../config';
 import { query, collection, getDocs, where } from 'firebase/firestore';
 
-const rooms = [];
+
 
 
 export default function GroupScreen({ navigation }) {
- 
+  
+  const [rooms, setRooms] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
   const userId = user.uid;
-
-  const fetchRoomsData = async () => {
-    const q = query(collection(FIRESTORE_DB, "Rooms"), where("Users", "array-contains", userId));
-    const querySnapshot = await getDocs(q);
  
-    querySnapshot.forEach((doc) => {
-      
-      // doc.data() is never undefined for query doc snapshots
-      rooms.push(doc.data().Name)
-
-        
-    });
-    console.log('Rooms', rooms)
-  }
-
   useEffect(() => {
-    fetchRoomsData();
-  }, [])
+    const fetchRooms = async () => {
+      const q = query(collection(FIRESTORE_DB, "Rooms"), where("Users", "array-contains", userId));
+      const querySnapshot = await getDocs(q);
+      const newRooms= [];
+    
+      querySnapshot.forEach((doc) => {
+        
+        // doc.data() is never undefined for query doc snapshots
+ 
+        newRooms.push(doc.data().Name)
+          
+      },);
+    
+      setRooms(newRooms)
+    } 
+    fetchRooms()
+  }, [userId])
+
+
+  console.log(rooms)
 
   const handleCreateNewRoom = () => {
     navigation.navigate('NewRoom');
@@ -59,9 +64,13 @@ export default function GroupScreen({ navigation }) {
         <Text style={styles.buttonText}>Create New Room</Text>
       </TouchableOpacity> 
       <Text style={[styles.title, { textAlign: 'center' }]}>My rooms</Text>
-        {rooms.map((item, index) => (
-          <Text key={index}>{item}</Text>
-        ))}
+     
+     
+     {rooms.map((item, index) => (
+        <Text key={index}>{item}</Text>
+      ))}
+   
+
     </View>
   );
 }
