@@ -1,55 +1,82 @@
-import React, { useState, useEffect } from 'react';
-import MapView, {Marker} from 'react-native-maps';
-import { Dimensions, StyleSheet, View, Text, Button} from 'react-native';
-import * as Location from 'expo-location';
+import React, { useState } from 'react';
+import MapView, { Callout, Marker } from 'react-native-maps';
+import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { FIRESTORE_DB } from '../../config';
+import { setDoc, doc } from "firebase/firestore";
 
 export default function MapScreen() {
-    const [mapRegion, setMapRegion] = useState({
-        latitude: 37.78825,
-        longitude: -122.4324,
+    const [pin, setPin] = useState(null);
+    const [region, setRegion] = useState({
+        latitude: 59.875202,
+        longitude: 17.655485,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     });
-    const userLocation = async () => {
-        let {status} = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted'){
-            setErrorMsg('Permission to access location was denied')
-        }
-        let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
-        setMapRegion({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-        })
-        console.log(location.coords.latitude, location.coords.longitude)
+    const handlePlaceSelected = async (data, details) => {
+        const { lat: latitude, lng: longitude } = details.geometry.location;
+        const placeName = details.name;
+        setPin({ latitude, longitude });
+        setRegion({ ...region, latitude, longitude });
+    
+        await setDoc(doc(FIRESTORE_DB, "Places", placeName),{
+            longitude: longitude,
+            latitude: latitude,
+        });
+    };
+    const handleRemoveMarker = () => {
+        console.log("klickat");
+        setPin(null);
+    };
 
-    }
-    useEffect(() => {
-        userLocation();
-    }, []);
-    return (
-        <View style={styles.container}>
-            <MapView style={styles.map} 
-                region = {mapRegion}
-            >
-            <Marker coordinate={mapRegion} title = "Marker" />
-            </MapView>
-            <Button title = 'Get Location' onPress={userLocation} />
-        </View>
+
+    
+
+return (
+    <View style={{ marginTop: 50, flex: 1 }}>
+        <GooglePlacesAutocomplete
+            placeholder="Search"
+            fetchDetails={true}
+            onPress={handlePlaceSelected}
+            query={{
+            key: 'AIzaSyAAT9kFxe-wsChcOavKovloSDvpKi0SLDA',
+            language: 'en',
+            components: 'country:se',
+            types: 'restaurant|bar|cafe',
+            radius: 30000,
+            location: `${region.latitude},${region.longitude}`,
+            }}
+            styles={{
+            container: { flex: 0, position: 'absolute', width: '100%', zIndex: 1 },
+            listView: { backgroundColor: 'white' },
+            }}
+        />
+        <MapView
+            style={styles.map}
+            region={region}
+            provider="google"
+        >
         
-    );
+        <Marker
+            coordinate={pin}
+            pinColor="red"
+        >
+        <Callout>
+            <Button title="Delete pin" onPress={handleRemoveMarker}>
+            </Button>
+        </Callout>   
+        </Marker>
+        </MapView>
+    </View>
+);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
+    container: {
+        flex: 1,
+    },
+    map: {
+        width: '100%',
+        height: '100%',
+    },
 });
