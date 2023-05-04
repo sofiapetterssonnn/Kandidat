@@ -32,9 +32,13 @@ export default function LogInScreen() {
 
 
   const handleLogin = () => {
+    if (!email || !password) {
+      setMessage('Please enter your email and password');
+      return;
+    }
+  
     signInWithEmailAndPassword(FIREBASE_AUTH, email, password)
    .then((userCredential) => {
- 
    const user = userCredential.user;
    console.log('Signed in as', user.email)
    // ...
