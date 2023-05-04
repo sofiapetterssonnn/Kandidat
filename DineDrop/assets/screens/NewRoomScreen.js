@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../config';
 import { getAuth } from 'firebase/auth';
 import { query, where, getDocs } from "firebase/firestore";
 import { useNavigation } from '@react-navigation/native';
-
+import { AntDesign } from '@expo/vector-icons';
 /*handleSaveRoom" används för att spara rummet och navigera tillbaka till föregående skärm
 "handleSearch" används för att söka efter användare och 
 uppdatera "searchResults" med de hittade användarna
@@ -18,6 +18,21 @@ renderItem är en funktion som bestämmer hur varje objekt ska visas i listan
 keyExtractor används för att ge varje objekt en unik ID som React kan använda för att hantera uppdateringar av listan mer effektivt*/
 const userInitials = [];
 
+
+function GoBackButton (props) {
+  const navigation = useNavigation()
+  return (
+
+      <TouchableOpacity style={styles.goBackButton} 
+          onPress={() => {
+          console.log('I am tapped');
+          navigation.navigate('Tabs')
+          }}
+      >
+          <AntDesign name="left" size={30} color="white" />
+      </TouchableOpacity>
+  );
+}
 
 
 export default function NewRoomScreen() {
@@ -81,6 +96,7 @@ export default function NewRoomScreen() {
  */
   return (
     <View style={styles.container}>
+      <GoBackButton/>
       <Text style={styles.label}>Room Name:</Text>
       <TextInput
         style={styles.input}
@@ -114,10 +130,12 @@ export default function NewRoomScreen() {
         </View>
       ))}
 
-
-      <TouchableOpacity style={styles.saveButton} onPress={handleSaveRoom}>
-        <Text style={styles.saveButtonText}>Save Room</Text>
-      </TouchableOpacity>
+      <View style={styles.saveContainer}>
+        <TouchableOpacity style={styles.saveButton} onPress={handleSaveRoom}>
+          <Text style={styles.saveButtonText}>Save Room</Text>
+        </TouchableOpacity>
+      </View>
+   
     </View>
   );
 }
@@ -141,12 +159,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginBottom: 20,
   },
+  saveContainer:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: '5%',
+    left: '5%',
+    right: '5%',
+  },
   saveButton: {
-    backgroundColor: '#B4D6FF',
+    
+    width: '100%',
+    height: 40,
     borderRadius: 20,
+    backgroundColor: '#B4D6FF',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginTop: "80%",
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    
 },
   saveButtonText: {
     color: '#1B2156',
@@ -177,13 +210,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  initialsContainer:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   initials:{
-    backgroundColor: '#F6C3DC',
+    //backgroundColor: '#F6C3DC',
     borderRadius: 50,
     width: 50,
     height: 50,
-    marginTop: 10,
-    marginBottom: 20 
+    margin: 20,
   },  
   initialsText:{
     color: '#1B2156',
@@ -191,5 +228,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     lineHeight:50
-  }
+  },
+  goBackButton:{
+    backgroundColor: 'transparent',
+    marginTop: 50,
+    marginBottom: 50,
+  },
 });
