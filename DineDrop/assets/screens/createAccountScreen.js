@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '../../config';
 import { setDoc, doc } from "firebase/firestore";
@@ -22,10 +22,11 @@ function GoBackButton (props) {
 
       <TouchableOpacity style={styles.goBackButton} 
           onPress={() => {
-          //console.log('I am tapped');
+          console.log('I am tapped');
           navigation.navigate('Login')
           }}
       >
+
           <AntDesign name="left" size={30} color="white" />
       </TouchableOpacity>
   );
@@ -92,7 +93,7 @@ export default function SignUpScreen() {
 
   return (
     <View style={styles.container}>
-        <GoBackButton/>
+      <GoBackButton/>
       <Text style={styles.title}>Create Account</Text>
 
       <Text style={styles.label}>First Name:</Text>
@@ -185,9 +186,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     marginEnd: 300,
     marginBottom: 40,
-
-
-
   },
 });
 

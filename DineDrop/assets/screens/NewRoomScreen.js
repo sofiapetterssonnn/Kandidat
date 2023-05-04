@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons';
 
 /*handleSaveRoom" används för att spara rummet och navigera tillbaka till föregående skärm
 "handleSearch" används för att söka efter användare och 
@@ -12,11 +14,27 @@ data-egenskapen är en array med objekt som innehåller information om varje sö
 renderItem är en funktion som bestämmer hur varje objekt ska visas i listan
 keyExtractor används för att ge varje objekt en unik ID som React kan använda för att hantera uppdateringar av listan mer effektivt*/
 
+function GoBackButton (props) {
+  const navigation = useNavigation()
+  return (
+
+      <TouchableOpacity style={styles.goBackButton} 
+          onPress={() => {
+          console.log('I am tapped');
+          navigation.navigate('Tabs')
+          }}
+      >
+          <AntDesign name="left" size={30} color="white" />
+      </TouchableOpacity>
+  );
+}
+
 
 export default function NewRoomScreen({ navigation }) {
   const [roomName, setRoomName] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+
 
   const handleSaveRoom = () => {
     // lägg till för att spara rummet
@@ -50,6 +68,7 @@ export default function NewRoomScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <GoBackButton/>
       <Text style={styles.label}>Room Name:</Text>
       <TextInput
         style={styles.input}
@@ -135,5 +154,12 @@ searchButtonText: {
 color: '#1B2156',
 fontWeight: 'bold',
 fontSize: 16,
+},
+goBackButton:{
+  backgroundColor: 'transparent',
+  //marginEnd: 300,
+  //marginBottom: 40,
+  marginTop: 50,
+  marginBottom: 50,
 },
 });
