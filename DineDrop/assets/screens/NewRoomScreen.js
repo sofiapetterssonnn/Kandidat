@@ -5,7 +5,7 @@ import { FIRESTORE_DB } from '../../config';
 import { getAuth } from 'firebase/auth';
 import { query, where, getDocs } from "firebase/firestore";
 import { useNavigation } from '@react-navigation/native';
-
+import { AntDesign } from '@expo/vector-icons';
 /*handleSaveRoom" används för att spara rummet och navigera tillbaka till föregående skärm
 "handleSearch" används för att söka efter användare och 
 uppdatera "searchResults" med de hittade användarna
@@ -19,6 +19,21 @@ keyExtractor används för att ge varje objekt en unik ID som React kan använda
 const userInitials = [];
 
 const colors = ['#9CDAD2', '#F6C3DC', '#FFEDAC', '#F5CBA4', '#B6BDFF'];
+
+function GoBackButton (props) {
+  const navigation = useNavigation()
+  return (
+
+      <TouchableOpacity style={styles.goBackButton} 
+          onPress={() => {
+          console.log('I am tapped');
+          navigation.navigate('Tabs')
+          }}
+      >
+          <AntDesign name="left" size={30} color="white" />
+      </TouchableOpacity>
+  );
+}
 
 
 export default function NewRoomScreen() {
@@ -98,6 +113,7 @@ export default function NewRoomScreen() {
  */
   return (
     <View style={styles.container}>
+      <GoBackButton/>
       <Text style={styles.label}>Room Name:</Text>
       <TextInput
         style={styles.input}
@@ -228,5 +244,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     lineHeight:50
-  }
+  },
+  goBackButton:{
+    backgroundColor: 'transparent',
+    marginTop: 50,
+    marginBottom: 50,
+  },
 });

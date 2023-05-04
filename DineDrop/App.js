@@ -52,7 +52,9 @@ export default function App() {
          name="Settings"
          component={SettingsScreen}
        />
-       <Stack.Screen name="NewRoom" component={NewRoomScreen} />
+       <Stack.Screen  options={{headerShown: false}}
+       name="NewRoom" 
+       component={NewRoomScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>
