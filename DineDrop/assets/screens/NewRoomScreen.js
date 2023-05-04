@@ -18,7 +18,23 @@ renderItem är en funktion som bestämmer hur varje objekt ska visas i listan
 keyExtractor används för att ge varje objekt en unik ID som React kan använda för att hantera uppdateringar av listan mer effektivt*/
 const userInitials = [];
 
-const colors = ['#9CDAD2', '#F6C3DC', '#FFEDAC', '#F5CBA4', '#B6BDFF'];
+const colors = [
+  '#9CDAD2',
+  '#F6C3DC',
+  '#FFEDAC',
+  '#F5CBA4',
+  '#B6BDFF',
+  '#C7CEEA',
+  '#E3D4FF',
+  '#FFD6A5',
+  '#E2E2B0',
+  '#FFC2D1',
+  '#E6D5C6',
+  '#F7DCD6',
+  '#D8E2DC',
+  '#F0E5C8',
+  '#F1ECE9',
+];
 
 
 export default function NewRoomScreen() {
@@ -26,17 +42,18 @@ export default function NewRoomScreen() {
   const user = auth.currentUser;
   const [roomName, setRoomName] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
   const [users, setUsers] = useState([user.uid]);
   const [userInitials, setUserInitials] = useState([]);
-  const [bgColor, setBgColor] = useState(colors[0]);
+ // const [bgColors, setBgColors] = useState([]);
+
+  //const [searchResults, setSearchResults] = useState([]);
 
   const navigation = useNavigation()
 
-  const changeBgColor = () => {
+  /*const changeBgColor = () => {
     const index = Math.floor(Math.random() * colors.length);
-    setBgColor(colors[index]);
-  };
+    setBgColors(colors[index]);
+  };*/
 
   const handleSaveRoom = async () => {
     // lägg till för att spara rummet
@@ -68,15 +85,15 @@ export default function NewRoomScreen() {
       if(doc.id == user.uid){
         Alert.alert('Thats you')
       }
-      else if(users.includes(doc.id) ){
+       else if(users.includes(doc.id) ){
         Alert.alert('Already added')
-      }
+      } 
       else{
         newUser.push(doc.id)
         newUserInitials.push([doc.data().firstname[0], doc.data().lastname[0]])
         console.log('New user', newUser)
         console.log('New user initials' , newUserInitials)
-        changeBgColor() 
+        //changeBgColor() 
         setSearchTerm('')
         
       }
@@ -126,7 +143,7 @@ export default function NewRoomScreen() {
        */}
       <View style={styles.initialsContainer}>
         {userInitials.map((item, index) => (
-          <View style={[styles.initials, { backgroundColor: bgColor }]} key={index}>
+          <View style={[styles.initials, { backgroundColor: colors[index] }]} key={index}>
             <Text style={styles.initialsText} >{item[0].toString()}{item[1].toString()}</Text>
           </View>
         ))}
@@ -167,6 +184,7 @@ const styles = StyleSheet.create({
     bottom: '5%',
     left: '5%',
     right: '5%',
+ 
   },
   saveButton: {
     
@@ -214,13 +232,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
   },
   initials:{
     //backgroundColor: '#F6C3DC',
     borderRadius: 50,
     width: 50,
     height: 50,
-    margin: 20,
+    margin: '5%',
   },  
   initialsText:{
     color: '#1B2156',
