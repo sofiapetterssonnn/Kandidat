@@ -87,6 +87,7 @@ export default function MapScreen() {
 
     return (
         <View style={{  flex: 1 ,  alignItems: 'center'}}>
+            <GoBackButton/>
           {region && (
         
         <GooglePlacesAutocomplete
