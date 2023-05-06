@@ -6,6 +6,25 @@ import { FIRESTORE_DB } from '../../config';
 import { setDoc, doc } from "firebase/firestore";
 import * as Location from 'expo-location';
 
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
+function GoBackButton (props) {
+    const navigation = useNavigation()
+    return (
+  
+        <TouchableOpacity style={styles.goBackButton}
+            onPress={() => {
+            console.log('I am tapped');
+            navigation.goBack('Group')
+            }}
+        >
+    
+        <AntDesign name="left" size={30} color="white" />
+         
+        </TouchableOpacity>
+    );
+  }
 
 export default function MapScreen() {
     const [pin, setPin] = useState(null);
@@ -67,9 +86,10 @@ export default function MapScreen() {
     };
 
     return (
-        <View style={{ marginTop: 50, flex: 1 }}>
+        <View style={{  flex: 1 ,  alignItems: 'center'}}>
           {region && (
-            <GooglePlacesAutocomplete
+        
+        <GooglePlacesAutocomplete
               placeholder="Search"
               fetchDetails={true}
               onPress={handlePlaceSelected}
@@ -85,8 +105,8 @@ export default function MapScreen() {
                 container: {
                   flex: 0,
                   position: 'absolute',
-                  width: '100%',
-                  zIndex: 1,
+                  width: '80%',
+                  marginTop: "25%",  zIndex: 1,
                 },
                 listView: { backgroundColor: 'white' },
               }}
@@ -116,7 +136,17 @@ const styles = StyleSheet.create({
     map: {
         width: '100%',
         height: '100%',
+        zIndex: 0,
+        
     },
+    goBackButton:{
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        marginEnd: 20,
+        top: 40,
+        left: 10,
+        zIndex:2,
+      },
 });
 
     
