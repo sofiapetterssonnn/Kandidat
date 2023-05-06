@@ -18,7 +18,7 @@ som navigerar användaren till en annan skärm som heter NewRoom.
 */
 
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Alert,StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { getAuth } from "firebase/auth";
 import { FIRESTORE_DB } from '../../config';
 import { query, collection, getDocs, where } from 'firebase/firestore';
@@ -42,6 +42,8 @@ function CreateNewButton (props) {
   );
 }
 
+
+
 // const handleCreateNewRoom = () => {
 //   navigation.navigate('NewRoom');
 // };
@@ -53,8 +55,31 @@ export default function GroupScreen() {
   const auth = getAuth();
   const user = auth.currentUser;
   const userId = user.uid;
- 
+  const navigation = useNavigation()
 
+  const handleLongPress = (index,room) => {
+    Alert.alert(room,
+    '',
+    [
+      {
+        text: 'Enter room',
+      
+      },
+      {
+        text: 'Leave room',
+        onPress: () => {
+          // Handle "Leave room" button press here
+        },
+      },])
+  
+  }
+  
+  const handlePress = (index) => {
+    
+    navigation.navigate('Map', { 
+      RoomId: index
+    });
+  }
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -63,7 +88,7 @@ export default function GroupScreen() {
       const newRooms= [];
     
       querySnapshot.forEach((doc) => {
-        
+        console.log(doc.data())
         // doc.data() is never undefined for query doc snapshots
  
         newRooms.push(doc.data().Name)
@@ -84,12 +109,12 @@ export default function GroupScreen() {
       <View style={styles.scrollContainer}>
         <ScrollView>
           <View style={styles.roomsContainer}>
-              {rooms.map((item, index) => (
-                  <TouchableOpacity style={styles.roomContainer} key={index}> 
+              {rooms.map((room, index) => (
+                  <TouchableOpacity style={styles.roomContainer} key={index} onPress={() => handlePress(index)} onLongPress={() => handleLongPress(index, room)}> 
                     <View style={styles.room}>
 
                     </View>
-                    <Text style={styles.roomText} >{item}</Text>
+                    <Text style={styles.roomText} >{room}</Text>
                   </TouchableOpacity>
                 ))}
             </View>

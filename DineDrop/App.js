@@ -55,6 +55,9 @@ export default function App() {
        <Stack.Screen  options={{headerShown: false}}
        name="NewRoom" 
        component={NewRoomScreen} />
+        <Stack.Screen  options={{headerShown: false}}
+       name="Map" 
+       component={MapScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>
