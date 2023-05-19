@@ -61,7 +61,7 @@ export default function SignUpScreen() {
     // PÅ nått vis vill vi skicka den inmatade till DATABAS för att skapa ett konto
     console.log('Skapar konto...');
 
-    console.log('Skapar konto...');
+   
     createUserWithEmailAndPassword(FIREBASE_AUTH, email, password)
     .then(async (userCredential) => {
      
@@ -79,7 +79,7 @@ export default function SignUpScreen() {
     .then(()=> {
         // Uppdatera auth med display name
       updateProfile(FIREBASE_AUTH.currentUser, {
-      displayName: firstName + ' ' + lastName,
+      displayName: username,
     });
     })
     .catch((error) => {
@@ -161,13 +161,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   input: {
-    backgroundColor: 'white',
-    height: 40,
+    backgroundColor: '#FFF',
+    marginBottom: 20,
+    height: '5%',
     width: '80%',
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    marginVertical: 10,
+    borderRadius: 7,
+    marginVertical: 5,
     paddingHorizontal: 10,
   },
   button: {

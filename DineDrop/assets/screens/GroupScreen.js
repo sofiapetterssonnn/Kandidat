@@ -88,7 +88,7 @@ export default function GroupScreen() {
       const newRooms= [];
     
       querySnapshot.forEach((doc) => {
-        console.log(doc.data())
+       
         // doc.data() is never undefined for query doc snapshots
  
         newRooms.push(doc.data().Name)
@@ -99,7 +99,7 @@ export default function GroupScreen() {
     } 
     if(isFocused){
       fetchRooms()
-      console.log('Hej')
+      
     }
   }, [userId,isFocused])
 
@@ -172,7 +172,8 @@ const styles = StyleSheet.create({
   scrollContainer:{
    
     height: '60%',
-    width: '100%',
+    width: 300,
+
    
   },
 
@@ -182,19 +183,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexWrap: 'wrap',
     alignItems: 'flex-start',
+   
   },
   roomContainer:{
     marginTop: 10,
-    margin:10,
+    margin:25,
     borderTopColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    //backgroundColor: 'white'
   },
   room: {
     height: 100,
-    width:100,
+    width: 100,
     //backgroundColor: '#FFFFFF',
-    margin: '10%',
     borderWidth: 1,
     borderColor: '#B4D6FF',
     borderRadius: 100,

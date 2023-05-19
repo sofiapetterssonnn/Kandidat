@@ -72,8 +72,7 @@ export default function NewRoomScreen() {
 
   const handleSaveRoom = async () => {
     // lägg till för att spara rummet
-    console.log('Users saved:', users)
-    console.log('Initials saved: ', userInitials)
+    
     if(roomName!=''){
       const docRef = await addDoc(collection(FIRESTORE_DB, "Rooms"), {
         Name: roomName,
@@ -106,9 +105,8 @@ export default function NewRoomScreen() {
       else{
         newUser.push(doc.id)
         newUserInitials.push([doc.data().firstname[0], doc.data().lastname[0]])
-        console.log('New user', newUser)
-        console.log('New user initials' , newUserInitials)
-        //changeBgColor() 
+       
+ 
         setSearchTerm('')
         
       }
@@ -187,10 +185,13 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#FFF',
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
     marginBottom: 20,
+    height: '5%',
+    width: '100%',
+    borderRadius: 7,
+    marginVertical: 10,
+    paddingHorizontal: 10,
+  
   },
   saveContainer:{
     flexDirection: 'row',

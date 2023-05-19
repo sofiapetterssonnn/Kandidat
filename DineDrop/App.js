@@ -12,6 +12,7 @@ import ProfileScreen from './assets/screens/profileScreen.js';
 import SettingsScreen from './assets/screens/settingsScreen.js';
 import NewRoomScreen from './assets/screens/NewRoomScreen.js';
 import MapScreen from './assets/screens/mapScreen.js';
+import NewPasswordScreen from './assets/screens/newPasswordScreen.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,9 +56,15 @@ export default function App() {
        <Stack.Screen  options={{headerShown: false}}
        name="NewRoom" 
        component={NewRoomScreen} />
+
         <Stack.Screen  options={{headerShown: false}}
        name="Map" 
        component={MapScreen} />
+       
+       <Stack.Screen  options={{headerShown: false}}
+       name="NewPassword" 
+       component={NewPasswordScreen} />
+
 
       </Stack.Navigator>
     </NavigationContainer>
