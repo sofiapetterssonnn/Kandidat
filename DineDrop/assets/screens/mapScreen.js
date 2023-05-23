@@ -7,7 +7,7 @@ import { setDoc, doc } from "firebase/firestore";
 import * as Location from 'expo-location';
 
 import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 function GoBackButton (props) {
     const navigation = useNavigation()
@@ -29,6 +29,8 @@ function GoBackButton (props) {
 export default function MapScreen() {
     const [pin, setPin] = useState(null);
     const [region, setRegion] = useState(null);
+    const route = useRoute();
+    const {RoomId}  = route.params;
 
     useEffect(() => {
         // Get the user's current location

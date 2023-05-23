@@ -51,7 +51,8 @@ function CreateNewButton (props) {
 export default function GroupScreen() {
 
   const isFocused = useIsFocused();
-  const [rooms, setRooms] = useState([]);
+  const [roomsName, setRoomsName] = useState([]);
+  const [roomsID, setRoomsID] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
   const userId = user.uid;
@@ -85,17 +86,22 @@ export default function GroupScreen() {
     const fetchRooms = async () => {
       const q = query(collection(FIRESTORE_DB, "Rooms"), where("Users", "array-contains", userId));
       const querySnapshot = await getDocs(q);
-      const newRooms= [];
+      const newRoomsName= [];
+      const newRoomsID = []
     
       querySnapshot.forEach((doc) => {
        
         // doc.data() is never undefined for query doc snapshots
  
-        newRooms.push(doc.data().Name)
+        newRoomsName.push(doc.data().Name)
+        newRoomsID.push(doc.id)
           
       },);
     
-      setRooms(newRooms)
+      setRoomsName(newRoomsName)
+      setRoomsID(newRoomsID)
+    
+
     } 
     if(isFocused){
       fetchRooms()
@@ -109,8 +115,8 @@ export default function GroupScreen() {
       <View style={styles.scrollContainer}>
         <ScrollView>
           <View style={styles.roomsContainer}>
-              {rooms.map((room, index) => (
-                  <TouchableOpacity style={styles.roomContainer} key={index} onPress={() => handlePress(index)} onLongPress={() => handleLongPress(index, room)}> 
+              {roomsName.map((room, index) => (
+                  <TouchableOpacity style={styles.roomContainer} key={index} onPress={() => handlePress(roomsID[index])} onLongPress={() => handleLongPress(index, room)}> 
                     <View style={styles.room}>
 
                     </View>
