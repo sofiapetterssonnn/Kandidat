@@ -52,10 +52,11 @@ export default function ProfileScreen() {
 
         // doc.data() is never undefined for query doc snapshots
 
+
         newReviews.push(doc.data())
 
       },);
-
+      console.log(newReviews)
       setUserReviews(newReviews)
 
     };
