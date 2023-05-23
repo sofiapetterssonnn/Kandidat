@@ -3,8 +3,9 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList, Animated, Dimension
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { doc, getDocs, getDoc, query, collection, where } from 'firebase/firestore';
 import PublishedPost from '/Users/majaydreskog/Desktop/Kandidat/Kandidat/DineDrop/assets/components/publishedPost.js';
+import { FIRESTORE_DB } from '../../config';
 
 function SettingsButton(props) {
   const navigation = useNavigation();
@@ -28,28 +29,35 @@ export default function ProfileScreen() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const firestore = getFirestore();
-      const docRef = doc(firestore, 'Users', user.uid);
+
+      const docRef = doc(FIRESTORE_DB, 'Users', user.uid);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         setFirstName(docSnap.data().firstname);
         setLastName(docSnap.data().lastname);
+        console.log(firstName, lastName)
       } else {
         console.log('No such document!');
       }
     };
 
     const fetchUserReviews = async () => {
-      const firestore = getFirestore();
-      const reviewsRef = doc(firestore, 'Reviews', user.uid);
-      const reviewsSnap = await getDoc(reviewsRef);
 
-      if (reviewsSnap.exists()) {
-        setUserReviews(reviewsSnap.data().reviews);
-      } else {
-        console.log('No reviews found!');
-      }
+      const q = query(collection(FIRESTORE_DB, "Reviews"), where("User", "==", user.uid));
+      const querySnapshot = await getDocs(q);
+      const newReviews = [];
+
+      querySnapshot.forEach((doc) => {
+
+        // doc.data() is never undefined for query doc snapshots
+
+        newReviews.push(doc.data())
+
+      },);
+
+      setUserReviews(newReviews)
+
     };
 
     if (isFocused) {
