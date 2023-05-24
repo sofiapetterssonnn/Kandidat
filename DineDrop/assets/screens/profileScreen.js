@@ -116,45 +116,54 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1B2156',
+    // alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 0.99,
   },
   profileContainer: {
     backgroundColor: '#FFFFFF',
     width: '100%',
     marginBottom: 20,
     height: '20%',
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   profileIcon: {
+    marginTop: 20,
     marginLeft: 30,
-    width: 45,
-    marginTop: 10,
+    width: 40,
+    // backgroundColor: 'black',
   },
   button: {
-    padding: 15,
+    backgroundColor: 'black',
+    padding: 10,
     position: 'absolute',
     backgroundColor: 'transparent',
-    top: 10,
-    width: 60,
-    marginLeft: 360,
+    top: 55,
+    width: 50,
+    marginLeft: 310,
+
   },
   nameText: {
     color: '#B4D6FF',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 25,
     paddingTop: 8,
     marginLeft: 20,
   },
+
   usernameText: {
-    color: '#1B2156',
-    fontSize: 20,
+    color: "#1B2156",
+    fontSize: 15,
     paddingTop: 10,
-    marginLeft: 20,
+    marginLeft: 20
+    //backgroundColor: 'red',
   },
+
+
   userInformation: {
     flexDirection: 'row',
-    top: 40,
-    width: '55%',
+    //justifyContent: 'space-between',
+    top: 75,
+    width: '55%'
   },
   reviewList: {
     flexGrow: 1,
@@ -172,3 +181,8 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -20 }],
   },
 });
+
+
+
+
+
