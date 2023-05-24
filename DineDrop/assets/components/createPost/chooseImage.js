@@ -51,9 +51,9 @@ export default function PostScreen() {
             quality: 1,
         });
 
-        if (!result.cancelled) {
-            const { uri } = result;
-            setImage(uri);
+        if (!result.canceled) {
+            //const { uri } = result;
+            setImage(result.assets[0].uri)
         }
     };
 

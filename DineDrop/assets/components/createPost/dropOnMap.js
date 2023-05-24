@@ -32,7 +32,9 @@ export default function DropOnMap() {
 
     useEffect(() => {
         // Get the user's current location
+        
         (async () => {
+          
             const { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 console.log('Permission denied');
