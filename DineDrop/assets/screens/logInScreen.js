@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_AUTH } from '../../config';
 import { signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
+
 
 export default function LogInScreen() {
   const navigation = useNavigation()
@@ -20,7 +21,7 @@ export default function LogInScreen() {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
-        
+        console.log('User is sign in from LogIn Screen')
         navigation.replace('Tabs')
       
       } else {
@@ -61,7 +62,19 @@ export default function LogInScreen() {
     console.log('Navigera till registreringssidan');
   };
 
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+    >
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View>
+
+
     <View style={styles.container}>
       <Text style={styles.title}>LOG IN</Text>
       <TextInput
@@ -69,6 +82,10 @@ export default function LogInScreen() {
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
+        keyboardType="email-address"
+        autoCapitalize="none"
+        autoCompleteType="email"
+        autoCorrect={false}
       />
       <TextInput
         style={styles.input}
@@ -76,10 +93,14 @@ export default function LogInScreen() {
         onChangeText={setPassword}
         secureTextEntry={true}
         placeholder="Password"
+        autoCapitalize="none"
+        autoCompleteType="password"
+          autoCorrect={false}
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>LOG IN</Text>
       </TouchableOpacity>
+      
       <Text style={styles.message}>{message}</Text>
       <View style={styles.signUp}>
         <Text style={styles.signUpText}>Don't have an accout?</Text>
@@ -90,8 +111,13 @@ export default function LogInScreen() {
         <Text style={styles.signUpLink}>Sign up here!</Text>
         </TouchableOpacity>
       </View>
+      
       <StatusBar style="auto" />
     </View>
+    </View>
+    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
+    
   );
 }
 
@@ -102,6 +128,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   title: {
     fontWeight: 'bold',
     fontSize: 36,
@@ -111,7 +138,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    width: '80%',
+    width: '100%',
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 5,

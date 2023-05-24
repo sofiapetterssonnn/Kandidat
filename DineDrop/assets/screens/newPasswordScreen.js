@@ -1,4 +1,4 @@
-import { Alert,StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { Alert,StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
@@ -62,6 +62,7 @@ export default function NewPasswordScreen(){
 
 
     return(
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
        <View style={styles.container}>
         <View style={styles.titleContainer} >
             <GoBackButton/>
@@ -98,6 +99,7 @@ export default function NewPasswordScreen(){
         </TouchableOpacity> 
 
        </View>
+       </TouchableWithoutFeedback>
     )
 
 }

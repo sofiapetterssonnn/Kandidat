@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { FIREBASE_AUTH } from '../../config';
 import { useNavigation } from '@react-navigation/native';
 import { signOut, deleteUser } from 'firebase/auth';
@@ -245,6 +245,7 @@ export default function SettingsScreen() {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       
       <View style={styles.titleContainer} >
@@ -295,6 +296,7 @@ export default function SettingsScreen() {
         </TouchableOpacity> 
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

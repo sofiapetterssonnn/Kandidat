@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '../../config';
 import { setDoc, doc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile} from 'firebase/auth';
 
 import { AntDesign } from '@expo/vector-icons';
+
 
 /* useState är en inbyggd funktion i react som används för att skapa tillståndsvariabler i en komponent, vi slkapar firstName, lastName, email, username, password
 Varje tillståndsvariabel håller ett värde och kan uppdateras med hjälp av motsvarande funktion som är tilldelad till den, setFristName, setLastName osv 
@@ -39,6 +40,29 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(()=>{
+    const keyBoardShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true)
+        
+      }
+    )
+    const keyBoardHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false)
+        
+      }
+    )
+    return () => {
+      keyBoardShowListener.remove()
+      keyBoardHideListener.remove()
+    }
+
+  },[])
 
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
@@ -88,60 +112,78 @@ export default function SignUpScreen() {
       console.log(errorMessage)
     // ..
     }); 
+    const dismissKeyboard = () => {
+      Keyboard.dismiss();
+    };
+  
   };
 
 
+
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
+      
       <GoBackButton/>
       <Text style={styles.title}>Create Account</Text>
+      <View style={styles.containerInput}>
+        <View style={keyboardVisible? styles.scrollKeyboardContainer:styles.scrollContainer}
+            keyboardShouldPersistTaps="handled">
+          <ScrollView >
+          
+            <Text style={styles.label}>First Name:</Text>
+            <TextInput
+              style={styles.input}
+              value={firstName}
+              onChangeText={setFirstName}
+            />
 
-      <Text style={styles.label}>First Name:</Text>
-      <TextInput
-        style={styles.input}
-        value={firstName}
-        onChangeText={setFirstName}
-      />
+            <Text style={styles.label}>Last Name:</Text>
+            <TextInput
+              style={styles.input}
+              value={lastName}
+              onChangeText={setLastName}
+            />
 
-      <Text style={styles.label}>Last Name:</Text>
-      <TextInput
-        style={styles.input}
-        value={lastName}
-        onChangeText={setLastName}
-      />
+            <Text style={styles.label}>E-mail:</Text>
+            <TextInput 
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+            />
 
-      <Text style={styles.label}>E-mail:</Text>
-      <TextInput 
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-      />
+            <Text style={styles.label}>Username:</Text>
+            <TextInput
+              style={styles.input}
+              value={username}
+              onChangeText={setUsername}
+            />
 
-      <Text style={styles.label}>Username:</Text>
-      <TextInput
-        style={styles.input}
-        value={username}
-        onChangeText={setUsername}
-      />
-
-      <Text style={styles.label}>Password:</Text>
-      <TextInput
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry={true}
-      />
-      <TouchableOpacity style={styles.button} onPress={
-        handleSignUp}>
-        <Text style={styles.buttonText}>Create Account</Text>
-      </TouchableOpacity> 
-    </View>
+            <Text style={styles.label}>Password:</Text>
+            <TextInput
+              style={styles.input}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={true}
+            />
+            <TouchableOpacity style={styles.button} onPress={
+              handleSignUp}>
+              <Text style={styles.buttonText}>Create Account</Text>
+            </TouchableOpacity> 
+        
+          </ScrollView>
+        </View>
+      </View>
+      </View>
+    </TouchableWithoutFeedback>
+   
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: '100%',
     backgroundColor: '#1B2156',
     alignItems: 'center',
     justifyContent: 'center',
@@ -163,11 +205,14 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#FFF',
     marginBottom: 20,
-    height: '5%',
+    height: 40,
     width: '80%',
     borderRadius: 7,
     marginVertical: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: 1,
+    marginLeft: '10%',
+    marginBottom: 10,
+  
   },
   button: {
     backgroundColor: '#B4D6FF',
@@ -185,6 +230,25 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     marginEnd: 300,
     marginBottom: 40,
+    marginTop: '20%'
   },
+  scrollContainer:{
+    //position: 'absolute',
+    marginTop: '10%',
+    height: '80%',
+    width: 350,
+   
+  },
+  scrollKeyboardContainer:{
+   // position: 'absolute',
+    marginTop: '10%',
+    height: '40%',
+    width: 350,
+   
+  },
+  containerInput:{
+    height:'80%',
+    width: 350,
+  }
 });
 

@@ -110,6 +110,7 @@ export default function GroupScreen() {
   }, [userId,isFocused])
 
   return (
+    
     <View style={styles.container}>
       <Text style={[styles.title, { textAlign: 'center' }]}>My rooms</Text>
       <View style={styles.scrollContainer}>
