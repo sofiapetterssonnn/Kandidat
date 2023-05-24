@@ -324,7 +324,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#B4D6FF',
     marginBottom: 5,
- 
   },
   input: {
     backgroundColor: '#FFF',

@@ -10,7 +10,7 @@ import { StyleSheet,  Text, View, TouchableOpacity  } from 'react-native';
 
 
 import GroupScreen from './GroupScreen.js';
-import PostScreen from './PostScreen.js';
+import DropOnMap from '../components/createPost/dropOnMap.js';
 import ProfileScreen from './profileScreen.js';
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +39,7 @@ const Tabs = () => {
             
          >
             <Tab.Screen name="Group" component={GroupScreen} options={{headerShown: false, tabBarIcon: ({focused, color})=>(<FontAwesome name="group" size={24} color={color} />)}} />
-            <Tab.Screen name="Post" component={PostScreen} options={{headerShown: false, tabBarIcon: ({focused, color})=>(<Entypo name="location-pin" size={50} color={color} />)}} />
+            <Tab.Screen name="DropOnMap" component={DropOnMap} options={{headerShown: false, tabBarIcon: ({focused, color})=>(<Entypo name="location-pin" size={50} color={color} />)}} />
             <Tab.Screen name="Profile" component={ProfileScreen} options={{headerShown: false, tabBarIcon: ({focused, color})=>(<Ionicons name="person" size={24} color={color} />)}} />
         </Tab.Navigator>
     );
