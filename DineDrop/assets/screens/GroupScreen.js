@@ -24,6 +24,7 @@ import { FIRESTORE_DB } from '../../config';
 import { query, collection, getDocs, where } from 'firebase/firestore';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { Image } from 'react-native';
 
 function CreateNewButton (props) {
   const navigation = useNavigation()
@@ -64,6 +65,11 @@ export default function GroupScreen() {
     [
       {
         text: 'Enter room',
+        onPress: () => {
+          navigation.navigate('Map', { 
+            RoomId: index
+          });
+        },
       
       },
       {
@@ -100,7 +106,6 @@ export default function GroupScreen() {
     
       setRoomsName(newRoomsName)
       setRoomsID(newRoomsID)
-    
 
     } 
     if(isFocused){
@@ -118,6 +123,7 @@ export default function GroupScreen() {
               {roomsName.map((room, index) => (
                   <TouchableOpacity style={styles.roomContainer} key={index} onPress={() => handlePress(roomsID[index])} onLongPress={() => handleLongPress(index, room)}> 
                     <View style={styles.room}>
+                      <Image source={require('../map.png')} style={{ width: 100, height: 100,    borderRadius: 100, }}/>
 
                     </View>
                     <Text style={styles.roomText} >{room}</Text>
@@ -203,6 +209,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     //backgroundColor: '#FFFFFF',
+    
     borderWidth: 1,
     borderColor: '#B4D6FF',
     borderRadius: 100,

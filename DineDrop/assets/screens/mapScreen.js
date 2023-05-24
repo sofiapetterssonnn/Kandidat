@@ -3,9 +3,9 @@ import MapView, { Callout, Marker } from 'react-native-maps';
 import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { FIRESTORE_DB } from '../../config';
-import { setDoc, doc } from "firebase/firestore";
+import { query, collection, getDocs, where, setDoc, doc } from 'firebase/firestore';
 import * as Location from 'expo-location';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -19,21 +19,58 @@ function GoBackButton (props) {
             navigation.goBack('Group')
             }}
         >
-    
+  
         <AntDesign name="left" size={30} color="white" />
-         
+
         </TouchableOpacity>
     );
   }
+
+function EditButton (props){
+  const navigation = useNavigation()
+    return (
+        <TouchableOpacity style={styles.editButton}
+            onPress={() => {
+            console.log('I am tapped');
+            navigation.goBack('Group')
+            }}
+        >
+  
+        <MaterialCommunityIcons name="dots-horizontal" size={24} color="#B4D6FF"/>
+
+        </TouchableOpacity>
+    );
+}
 
 export default function MapScreen() {
     const [pin, setPin] = useState(null);
     const [region, setRegion] = useState(null);
     const route = useRoute();
     const {RoomId}  = route.params;
+    const [Reviews, setReviews] = useState([])
 
+    //Get pins from users in room
+    useEffect(()=> {
+      console.log(RoomId)
+      const fetchReviews = async () => {
+        
+        const q = query(collection(FIRESTORE_DB, "Reviews"), where("Room", "==", RoomId));
+        const querySnapshot = await getDocs(q);
+        const review = {}
+        querySnapshot.forEach((doc) => {
+       
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.data())
+            
+        },);
+       
+      };
+      fetchReviews()
+
+    },[]);
+
+    // Get the user's current location
     useEffect(() => {
-        // Get the user's current location
         (async () => {
             const { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
@@ -90,6 +127,7 @@ export default function MapScreen() {
     return (
         <View style={{  flex: 1 ,  alignItems: 'center'}}>
             <GoBackButton/>
+            <EditButton/>
           {region && (
         
         <GooglePlacesAutocomplete
@@ -146,10 +184,19 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: 'transparent',
         marginEnd: 20,
-        top: 40,
+        top: 45,
         left: 10,
         zIndex:2,
       },
+
+    editButton:{
+      position: 'absolute',
+     // backgroundColor: 'white',
+      marginEnd: 20,
+      top: 40,
+      right: 10,
+      zIndex:2,
+    }
 });
 
     

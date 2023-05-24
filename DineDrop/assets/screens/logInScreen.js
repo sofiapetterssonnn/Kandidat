@@ -3,7 +3,7 @@ import { Alert, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'reac
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_AUTH } from '../../config';
-import { signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
+import { signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, getAuth} from 'firebase/auth';
 
 export default function LogInScreen() {
   const navigation = useNavigation()
@@ -12,7 +12,41 @@ export default function LogInScreen() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
+  const promptForEmail = () =>{
+  
+    return new Promise((resolve, reject) => {
+    Alert.prompt('Email', 'Enter email', [
+      {
+        text: "Send",
+        onPress:(text)=>resolve(text)
+        
+      },
+      {
+        text:"Cancel",
+        onPress: () => reject(new Error('Credentials input canceled'))
+      }
+  
+     ],)
 
+    })
+  
+  }
+
+  const handleResetPassword = async () => {
+    const email = await promptForEmail()
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+    .then(() => {
+      console.log('Password reset email sent!')
+     // Password reset email sent!
+      // ..
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+  }
 
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
@@ -89,7 +123,11 @@ export default function LogInScreen() {
         }}>
         <Text style={styles.signUpLink}>Sign up here!</Text>
         </TouchableOpacity>
+        
       </View>
+      <TouchableOpacity onPress={handleResetPassword}>
+          <Text style={styles.resetPassword}>Forgot password?</Text>
+      </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
   );
@@ -145,5 +183,10 @@ const styles = StyleSheet.create({
     color: '#B4D6FF',
     fontWeight: 'bold',
     marginLeft: 5,
+  },
+  resetPassword: {
+    color: '#B4D6FF',
+    marginTop: '5%',
+    fontWeight: 'bold',
   },
 });
