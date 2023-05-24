@@ -7,12 +7,15 @@ import LogInScreen from './assets/screens/logInScreen.js';
 import CreateAccountScreen from './assets/screens/createAccountScreen.js';
 import TabsScreen from './assets/screens/tabsScreen.js';
 import GroupScreen from './assets/screens/GroupScreen.js';
-import PostScreen from './assets/screens/PostScreen.js';
+import PostScreen from './assets/components/createPost/chooseImage.js';
 import ProfileScreen from './assets/screens/profileScreen.js';
 import SettingsScreen from './assets/screens/settingsScreen.js';
 import NewRoomScreen from './assets/screens/NewRoomScreen.js';
 import MapScreen from './assets/screens/mapScreen.js';
 import NewPasswordScreen from './assets/screens/newPasswordScreen.js';
+import WriteReview from './assets/components/createPost/writeReview.js';
+import DropOnMap from './assets/components/createPost/dropOnMap.js';
+import ChooseRoom from './assets/components/createPost/chooseRoom.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +68,18 @@ export default function App() {
        name="NewPassword" 
        component={NewPasswordScreen} />
 
+      <Stack.Screen  options={{headerShown: false}}
+       name="Writereview" 
+       component={WriteReview} />
+
+      <Stack.Screen  options={{headerShown: false}}
+       name="DropOnMap" 
+       component={DropOnMap} />
+
+
+      <Stack.Screen  options={{headerShown: false}}
+       name="ChooseRoom" 
+       component={ChooseRoom} />
 
       </Stack.Navigator>
     </NavigationContainer>
