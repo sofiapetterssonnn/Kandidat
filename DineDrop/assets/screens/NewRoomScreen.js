@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, FlatList, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { addDoc, collection } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../config';
 import { getAuth } from 'firebase/auth';
@@ -127,6 +127,7 @@ export default function NewRoomScreen() {
   };
  */
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       <GoBackButton/>
       <Text style={styles.label}>Room Name:</Text>
@@ -168,6 +169,7 @@ export default function NewRoomScreen() {
         </TouchableOpacity>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 
