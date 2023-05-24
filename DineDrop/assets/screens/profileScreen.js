@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { getAuth } from 'firebase/auth';
 import { doc, getDocs, getDoc, query, collection, where } from 'firebase/firestore';
-import PublishedPost from '/Users/majaydreskog/Desktop/Kandidat/Kandidat/DineDrop/assets/components/publishedPost.js';
+import PublishedPost from '../components/publishedPost.js';
 import { FIRESTORE_DB } from '../../config';
 
 function SettingsButton(props) {
