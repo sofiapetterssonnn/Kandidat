@@ -7,13 +7,16 @@ import { useNavigation } from '@react-navigation/native';
 
 import { AntDesign } from '@expo/vector-icons'; 
 
-function NextButton(props) {
+function NextButton(image) {
+    
     const navigation = useNavigation()
     return (
         <TouchableOpacity style={styles.nextButtonText} 
             onPress={() => {
             navigation.navigate("Writereview")
+            console.log(image)
             }}
+         
         >
             <Text style={styles.nextButtonText}>NEXT</Text>
         </TouchableOpacity>
@@ -59,7 +62,7 @@ export default function PostScreen() {
 
     return (
         <View style={styles.container}>
-            <NextButton/>
+            <NextButton image = {image} />
             <GoBackButton/>
             <View style={styles.imageContainer}>
                 {image ? (

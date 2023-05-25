@@ -3,11 +3,12 @@ import MapView, { Callout, Marker } from 'react-native-maps';
 import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { FIRESTORE_DB } from '../../config';
-import { query, collection, getDocs, where, setDoc, doc } from 'firebase/firestore';
+import { query, collection, getDocs, where, setDoc, doc, getDoc } from 'firebase/firestore';
 import * as Location from 'expo-location';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
+
 
 function GoBackButton (props) {
     const navigation = useNavigation()
@@ -48,7 +49,29 @@ export default function MapScreen() {
     const route = useRoute();
     const {RoomId}  = route.params;
     const [Reviews, setReviews] = useState([])
+  
+    const [locations, setLocations] = useState([]);
 
+    console.log(locations)
+
+    const fetchLocation = async (place) => {
+      
+        const docRef = doc(FIRESTORE_DB, "Places", place);
+        const docSnap = await getDoc(docRef);
+        const newLocation = []
+    
+        
+        if (docSnap.exists()) {
+            newLocation.push([docSnap.data().latitude, docSnap.data().longitude]);           
+            
+        } else {
+          // docSnap.data() will be undefined in this case
+          console.log("No such document!");
+
+        }
+        setLocations(locations=>[...locations, ...newLocation])
+        
+    };
     //Get pins from users in room
     useEffect(()=> {
       console.log(RoomId)
@@ -57,15 +80,20 @@ export default function MapScreen() {
         const q = query(collection(FIRESTORE_DB, "Reviews"), where("Room", "==", RoomId));
         const querySnapshot = await getDocs(q);
         const review = {}
-        querySnapshot.forEach((doc) => {
-       
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.data())
+
+
+        querySnapshot.forEach(async (doc) => {
             
-        },);
+            const place = doc.data().Place;
        
+            await fetchLocation(place);
+            
+           // console.log(latitude)
+          // doc.data() is never undefined for query doc snapshots
+        },);
+        
       };
-      fetchReviews()
+      fetchReviews();
 
     },[]);
 
@@ -93,7 +121,7 @@ export default function MapScreen() {
         const { lat: latitude, lng: longitude } = details.geometry.location;
         console.log(latitude,longitude);
         const placeName = details.name;
-        setPin({ latitude, longitude });
+        //setPin({ latitude, longitude });
         setRegion({ ...region, latitude, longitude });
 
         await setDoc(doc(FIRESTORE_DB, "Places", placeName),{
@@ -101,6 +129,7 @@ export default function MapScreen() {
             latitude: latitude,
         });
     };
+ 
 
     const handleRemoveMarker = () => {
         console.log("klickat");
@@ -154,7 +183,17 @@ export default function MapScreen() {
             />
           )}
           <MapView style={styles.map} region={region} provider="google">
-            <Marker coordinate={pin} pinColor="red">
+            {locations.map((location, index) => (
+            <Marker 
+                key={index} 
+                coordinate ={{
+                latitude: location[0],
+                longitude: location[1],
+                }}
+                pinColor="red"
+            />
+            ))}
+            <Marker coordinate={pin} pinColor='red'>
               <Callout>
                 <Button title="Delete pin" onPress={handleRemoveMarker} />
               </Callout>
