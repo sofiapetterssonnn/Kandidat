@@ -33,7 +33,7 @@ const Tabs = () => {
                     elevation: 0,
                     backgroundColor: '#ffffff',
                     opacity: 70,
-                    height: 90
+                    height: 90,
                 }
             }}
             
