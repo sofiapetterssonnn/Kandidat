@@ -13,8 +13,11 @@ function NextButton(image) {
     return (
         <TouchableOpacity style={styles.nextButtonText} 
             onPress={() => {
-            navigation.navigate("Writereview")
-            console.log(image)
+                console.log(image)
+                navigation.navigate("Writereview",{ 
+                    url: image,
+                   
+                  })
             }}
          
         >

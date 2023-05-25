@@ -16,12 +16,14 @@ export default function DropOnMap() {
     const [pin, setPin] = useState(null);
     const [region, setRegion] = useState(null);
     const [isEnabled, setIsEnabled] = useState(false)
+    const [place, setPlace] = useState('')
 
     function CreatePin(props) {
       const navigation = useNavigation()
       return (
           <TouchableOpacity style={isEnabled? styles.nextButton:styles.nextButtonDisabled} disabled={!isEnabled}
               onPress={() => {
+                
               navigation.navigate("Post")
               }}>
               
@@ -59,6 +61,7 @@ export default function DropOnMap() {
         const placeName = details.name;
         setPin({ latitude, longitude });
         setRegion({ ...region, latitude, longitude });
+        setPlace(placeName)
         
         await setDoc(doc(FIRESTORE_DB, "Places", placeName),{
             longitude: longitude,
