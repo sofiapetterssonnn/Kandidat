@@ -6,6 +6,8 @@ import { getAuth } from 'firebase/auth';
 import { doc, getDocs, getDoc, query, collection, where } from 'firebase/firestore';
 import PublishedPost from '../components/publishedPost.js';
 import { FIRESTORE_DB } from '../../config';
+import OnboardingItemPost from '../components/OnboardingItemPost.js';
+import PaginatorPost from '../components/paginatorPost.js';
 
 function SettingsButton(props) {
   const navigation = useNavigation();
@@ -24,9 +26,30 @@ export default function ProfileScreen() {
   const [lastName, setLastName] = useState('');
   const [userReviews, setUserReviews] = useState([]);
   const [activeReviewIndex, setActiveReviewIndex] = useState(0);
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const screenWidth = Dimensions.get('window').width;
+  /* const scrollX = useRef(new Animated.Value(0)).current;
+  const screenWidth = Dimensions.get('window').width; */
 
+const [currentIndex, setCurrentIndex] = useState(0)
+const scrollx = useRef(new Animated.Value(0)).current;
+
+const viewableItemsChanged = useRef(({viewableItems}) => {
+  setCurrentIndex(viewableItems[0].index);
+}).current;
+
+/* const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
+
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const scrollx = useRef(new Animated.Value(0)).current;
+ */
+  //testSTART
+  /* const viewableItemsChanged = useRef(({viewableItems}) => {
+  setCurrentIndex(viewableItems[0].index);
+  }).current; */
+
+  const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
+
+  //testEND
+ 
   useEffect(() => {
     const fetchUser = async () => {
 
@@ -67,7 +90,7 @@ export default function ProfileScreen() {
     }
   }, [user.uid, isFocused]);
 
-  const handleSwipeLeft = () => {
+ /*  const handleSwipeLeft = () => {
     if (activeReviewIndex < userReviews.length - 1) {
       setActiveReviewIndex(activeReviewIndex + 1);
     }
@@ -78,7 +101,7 @@ export default function ProfileScreen() {
       setActiveReviewIndex(activeReviewIndex - 1);
     }
   };
-
+ */
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
@@ -91,23 +114,32 @@ export default function ProfileScreen() {
           </View>
         </View>
       </View>
-      <Animated.FlatList
-        data={userReviews}
-        renderItem={({ item }) => (
-          <PublishedPost text={item.text} username={item.username} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled
-        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
-      />
-      <TouchableOpacity style={styles.swipeLeftButton} onPress={handleSwipeLeft}>
-        <Ionicons name="chevron-back-outline" size={40} color="#1B2156" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.swipeRightButton} onPress={handleSwipeRight}>
-        <Ionicons name="chevron-forward-outline" size={40} color="#1B2156" />
-      </TouchableOpacity>
+      <View style={styles.container2}>
+        <View style={{flex: 3}}>
+
+          <FlatList
+          data={userReviews} 
+          /* renderItem={({item}) => <PublishedPost text={item.text} username={item.username} />} */
+          renderItem={({item}) => <OnboardingItemPost item= {item}/>}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          bounces={false}
+          onScroll={Animated.event([{ nativeEvent: {contentOffset: {x:scrollx} } }], { useNativeDriver: false })}
+          
+          scrollEventThrottle={32}
+          onViewableItemsChanged={viewableItemsChanged}
+          viewabilityConfig={viewConfig}
+          //ref={slidesRef}
+          />
+        
+        </View>
+        <View style={styles.paginatorContainer}>
+          <PaginatorPost data={userReviews} scrollx={scrollx}/>
+        </View>
+        
+      </View>
     </View>
   );
 }
@@ -116,21 +148,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1B2156',
-    // alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 0.99,
   },
   profileContainer: {
     backgroundColor: '#FFFFFF',
     width: '100%',
-    marginBottom: 20,
     height: '20%',
   },
   profileIcon: {
     marginTop: 20,
     marginLeft: 30,
     width: 40,
-    // backgroundColor: 'black',
   },
   button: {
     backgroundColor: 'black',
@@ -155,29 +183,21 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingTop: 10,
     marginLeft: 20
-    //backgroundColor: 'red',
   },
-
-
   userInformation: {
     flexDirection: 'row',
-    //justifyContent: 'space-between',
     top: 75,
     width: '55%'
   },
-  reviewList: {
-    flexGrow: 1,
+  container2: {
+    marginTop: 10,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
-  swipeLeftButton: {
-    position: 'absolute',
-    top: '50%',
-    left: 20,
-    transform: [{ translateY: -20 }],
-  },
-  swipeRightButton: {
-    position: 'absolute',
-    top: '50%',
-    right: 20,
-    transform: [{ translateY: -20 }],
-  },
+  paginatorContainer:{
+    flex: 0.6,
+   
+  }
+ 
 });
