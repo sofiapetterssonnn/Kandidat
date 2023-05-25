@@ -134,6 +134,8 @@ export default function NewRoomScreen() {
       <TextInput
         style={styles.input}
         value={roomName}
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={text => setRoomName(text)}
         placeholder="Enter room name"
       />
@@ -142,6 +144,8 @@ export default function NewRoomScreen() {
         <TextInput
           style={styles.searchInput}
           value={searchTerm}
+          autoCapitalize="none"
+          autoCorrect={false}
           onChangeText={text => setSearchTerm(text)}
           placeholder="Search for friends"
         />

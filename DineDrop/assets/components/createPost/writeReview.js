@@ -71,6 +71,8 @@ export default function WriteReview() {
                     style={styles.reviewInput}
                     placeholder="Write your review..."
                     value={review}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     onChangeText={setReview}
                     multiline
                 />

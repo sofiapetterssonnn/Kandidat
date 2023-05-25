@@ -73,6 +73,8 @@ export default function NewPasswordScreen(){
         <TextInput
         style={styles.input}
         value={currentPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={setCurrentPassword}
         placeholder="Enter current password"
         secureTextEntry={true}
@@ -82,6 +84,8 @@ export default function NewPasswordScreen(){
         <TextInput
         style={styles.input}
         value={newPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={setnewPassword}
         placeholder="Enter new password"
         secureTextEntry={true}
@@ -90,6 +94,8 @@ export default function NewPasswordScreen(){
         <TextInput
         style={styles.input}
         value={newPassword2}
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={setnewPassword2}
         placeholder="Enter new password"
         secureTextEntry={true}

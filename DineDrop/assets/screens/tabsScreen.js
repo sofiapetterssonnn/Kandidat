@@ -4,7 +4,7 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
 
-import { StyleSheet,  Text, View, TouchableOpacity  } from 'react-native';
+import { StyleSheet,  Text, View, TouchableOpacity, SafeAreaView  } from 'react-native';
 
 
 
@@ -17,6 +17,7 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
     return(
+    
         <Tab.Navigator
             screenOptions={{
                 tabBarShowLabel: false,
@@ -44,6 +45,11 @@ const Tabs = () => {
         </Tab.Navigator>
     );
 }
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+  });
 
 
 export default Tabs;

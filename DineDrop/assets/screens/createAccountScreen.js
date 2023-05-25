@@ -135,6 +135,8 @@ export default function SignUpScreen() {
             <TextInput
               style={styles.input}
               value={firstName}
+              autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={setFirstName}
             />
 
@@ -142,6 +144,8 @@ export default function SignUpScreen() {
             <TextInput
               style={styles.input}
               value={lastName}
+              autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={setLastName}
             />
 
@@ -150,12 +154,16 @@ export default function SignUpScreen() {
               style={styles.input}
               value={email}
               onChangeText={setEmail}
+              autoCapitalize="none"
+              autoCorrect={false}
             />
 
             <Text style={styles.label}>Username:</Text>
             <TextInput
               style={styles.input}
               value={username}
+              autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={setUsername}
             />
 
@@ -163,6 +171,8 @@ export default function SignUpScreen() {
             <TextInput
               style={styles.input}
               value={password}
+              autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={setPassword}
               secureTextEntry={true}
             />

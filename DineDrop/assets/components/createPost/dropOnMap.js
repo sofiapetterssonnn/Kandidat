@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MapView, { Callout, Marker } from 'react-native-maps';
-import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { FIRESTORE_DB } from '../../../config';
 import { setDoc, doc } from "firebase/firestore";
@@ -89,10 +89,10 @@ export default function DropOnMap() {
     };
 
     return (
-       
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         
-        
-        <View style={{  flex: 1 ,  alignItems: 'center'}}>
+      
+        <View style={styles.container}>
           <CreatePin/>
           {region && (
        
@@ -133,18 +133,21 @@ export default function DropOnMap() {
             style={styles.currentLocationButton}
             onPress={handleCurrentLocation}
           >
-            <Text style={styles.currentLocationButtonText}>Current Location</Text>
+            
           </TouchableOpacity>
         </View>
-
+        </TouchableWithoutFeedback> 
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        alignItems: 'center',
+      
     },
     map: {
+       ...StyleSheet.absoluteFillObject,
         width: '100%',
         height: '100%',
         zIndex: 0,

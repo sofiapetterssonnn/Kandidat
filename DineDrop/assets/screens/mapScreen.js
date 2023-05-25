@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MapView, { Callout, Marker } from 'react-native-maps';
-import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableOpacity , TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { FIRESTORE_DB } from '../../config';
 import { query, collection, getDocs, where, setDoc, doc, getDoc } from 'firebase/firestore';
@@ -154,6 +154,7 @@ export default function MapScreen() {
     };
 
     return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{  flex: 1 ,  alignItems: 'center'}}>
             <GoBackButton/>
             <EditButton/>
@@ -206,6 +207,7 @@ export default function MapScreen() {
             <Text style={styles.currentLocationButtonText}>Current Location</Text>
           </TouchableOpacity>
         </View>
+        </TouchableWithoutFeedback>
       );
     }
 

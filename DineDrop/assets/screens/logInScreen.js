@@ -49,6 +49,7 @@ export default function LogInScreen() {
     });
   }
 
+
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
       if (user) {
@@ -129,7 +130,7 @@ export default function LogInScreen() {
         placeholder="Password"
         autoCapitalize="none"
         autoCompleteType="password"
-          autoCorrect={false}
+        autoCorrect={false}
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>LOG IN</Text>
@@ -144,7 +145,6 @@ export default function LogInScreen() {
         }}>
         <Text style={styles.signUpLink}>Sign up here!</Text>
         </TouchableOpacity>
-        
       </View>
       <TouchableOpacity onPress={handleResetPassword}>
           <Text style={styles.resetPassword}>Forgot password?</Text>

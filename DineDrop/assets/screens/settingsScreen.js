@@ -257,6 +257,8 @@ export default function SettingsScreen() {
       <TextInput
         style={styles.input}
         value={username}
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={setUsername}
         placeholder="Enter new username"
       />
@@ -265,6 +267,8 @@ export default function SettingsScreen() {
       <TextInput 
         style={styles.input}
         value={email}
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={setEmail}
         placeholder="Enter new e-mail address"
       />
@@ -273,6 +277,8 @@ export default function SettingsScreen() {
       <TextInput
         style={styles.input}
         value={firstName}
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={setFirstName}
         placeholder=""
       />
@@ -280,6 +286,8 @@ export default function SettingsScreen() {
       <TextInput
         style={styles.input}
         value={lastName}
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={setLastName}
         placeholder=""
       />
