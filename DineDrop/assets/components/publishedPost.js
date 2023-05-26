@@ -8,7 +8,8 @@ const PublishedPost = () => {
 
     const [imageUrl, setImageUrl] = useState('');
     const [review, setReview] = useState('');
-    
+    const [isEditable, setIsEditable] = useState(false);
+
 
     // useEffect för att hämta data:
     useEffect(() => {
@@ -22,10 +23,12 @@ const PublishedPost = () => {
 
         setImageUrl(fetchedImageUrl);
         setReview(fetchedReview);
+        setIsEditable(false); // Slidersarna blir inte redigerbara när recensionen är hämtad
     };
- 
+
     const handleEditPress = () => {
         console.log('Redigera recension');
+        setIsEditable(true); // Slidersarna blir redigerbara när användaren trycker på redigeringsknappen
     };
 
     const [range1, setRange1] = useState('50%');
@@ -46,53 +49,56 @@ const PublishedPost = () => {
             <View style={styles.imageContainer}>
                 <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
             </View>
-        <View style={styles.informationContainer}>
-        <View style={styles.sliders}>
-        <Slider
-        style={{width:150, height:40, marginTop:5}}
-        minimumValue={0}
-        maximumValue={1}
-        minimumTrackTintColor='#B4D6FF'
-        maximumTrackTintColor='white'
-        thumbTintColor='#B4D6FF'
-        value={0.5}
-        onValueChange={value => setRange1(parseInt(value * 100)+ '%')}
-        onSlidingStart={()=> setSliding1('Sliding')}
-        onSlidingComplete={()=> setSliding1('Inactive')}
-        />
+            <View style={styles.informationContainer}>
+                <View style={styles.sliders}>
+                    <Slider
+                        style={{ width: 150, height: 40, marginTop: 5 }}
+                        minimumValue={0}
+                        maximumValue={1}
+                        minimumTrackTintColor='#B4D6FF'
+                        maximumTrackTintColor='white'
+                        thumbTintColor='#B4D6FF'
+                        value={0.5}
+                        onValueChange={value => setRange1(parseInt(value * 100) + '%')}
+                        onSlidingStart={() => setSliding1('Sliding')}
+                        onSlidingComplete={() => setSliding1('Inactive')}
+                        disabled={!isEditable} // Slidersarna blir inaktiverade när recensionen inte är i redigeringsläge
+                    />
 
-        <Slider
-        style={{width:150, height:40, marginTop:5}}
-        minimumValue={0}
-        maximumValue={1}
-        minimumTrackTintColor='#B4D6FF'
-        maximumTrackTintColor='white'
-        thumbTintColor='#B4D6FF'
-        value={0.5}
-        onValueChange={value => setRange2(parseInt(value * 100)+ '%')}
-        onSlidingStart={()=> setSliding2('Sliding')}
-        onSlidingComplete={()=> setSliding2('Inactive')}
-        />
+                    <Slider
+                        style={{ width: 150, height: 40, marginTop: 5 }}
+                        minimumValue={0}
+                        maximumValue={1}
+                        minimumTrackTintColor='#B4D6FF'
+                        maximumTrackTintColor='white'
+                        thumbTintColor='#B4D6FF'
+                        value={0.5}
+                        onValueChange={value => setRange2(parseInt(value * 100) + '%')}
+                        onSlidingStart={() => setSliding2('Sliding')}
+                        onSlidingComplete={() => setSliding2('Inactive')}
+                        disabled={!isEditable} // Slidersarna blir inaktiverade när recensionen inte är i redigeringsläge
+                    />
 
-        <Slider
-        style={{width:150, height:40, marginTop:5}}
-        minimumValue={0}
-        maximumValue={1}
-        minimumTrackTintColor='#B4D6FF'
-        maximumTrackTintColor='white'
-        thumbTintColor='#B4D6FF'
-        value={0.5}
-        onValueChange={value => setRange3(parseInt(value * 100)+ '%')}
-        onSlidingStart={()=> setSliding3('Sliding')}
-        onSlidingComplete={()=> setSliding3('Inactive')}
-        />
-        </View>
+                    <Slider
+                        style={{ width: 150, height: 40, marginTop: 5 }}
+                        minimumValue={0}
+                        maximumValue={1}
+                        minimumTrackTintColor='#B4D6FF'
+                        maximumTrackTintColor='white'
+                        thumbTintColor='#B4D6FF'
+                        value={0.5}
+                        onValueChange={value => setRange3(parseInt(value * 100) + '%')}
+                        onSlidingStart={() => setSliding3('Sliding')}
+                        onSlidingComplete={() => setSliding3('Inactive')}
+                        disabled={!isEditable} // Slidersarna blir inaktiverade när recensionen inte är i redigeringsläge
+                    />
+                </View>
 
-        <View style={styles.reviewText}>
-            <Text style={styles.text} source={{review}} />
-        </View>
-        </View>
-        
+                <View style={styles.reviewText}>
+                    <Text style={styles.text} source={{ review }} />
+                </View>
+            </View>
+
         </View>
     );
 };
@@ -135,27 +141,27 @@ const styles = StyleSheet.create({
         borderBottomColor: '#B4D6FF',
         borderBottomWidth: 1,
     },
-    reviewText:{
+    reviewText: {
         flex: 1,
         backgroundColor: '#fff',
         padding: 10,
         height: 120,
         marginTop: 10,
-        
+
 
     },
-    text:{
+    text: {
         flex: 1,
         color: 'black',
     },
-    sliders:{
+    sliders: {
         backgroundColor: 'transparent',
-        
+
     },
-    informationContainer:{
+    informationContainer: {
         flexDirection: 'row',
     }
-    
+
 });
 
 export default PublishedPost;
