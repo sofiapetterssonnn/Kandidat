@@ -53,9 +53,10 @@ const PublishedPost = ({ item }) => {
                         minimumValue={0}
                         maximumValue={100}
                         minimumTrackTintColor='#B4D6FF'
-                        maximumTrackTintColor='white'
+                        maximumTrackTintColor={isEditable ? 'white' : '#B4D6FF'}
                         thumbTintColor='#B4D6FF'
                         value={item.Sliders[0]}
+                        disabled={!isEditable} // Slidersarna blir inaktiverade när recensionen inte är i redigeringsläge
                     />
 
                     <Slider
@@ -63,9 +64,10 @@ const PublishedPost = ({ item }) => {
                         minimumValue={0}
                         maximumValue={100}
                         minimumTrackTintColor='#B4D6FF'
-                        maximumTrackTintColor='white'
+                        maximumTrackTintColor={isEditable ? 'white' : '#B4D6FF'}
                         thumbTintColor='#B4D6FF'
                         value={item.Sliders[1]}
+                        disabled={!isEditable} // Slidersarna blir inaktiverade när recensionen inte är i redigeringsläge
                     />
 
                     <Slider
@@ -73,9 +75,10 @@ const PublishedPost = ({ item }) => {
                         minimumValue={0}
                         maximumValue={100}
                         minimumTrackTintColor='#B4D6FF'
-                        maximumTrackTintColor='white'
+                        maximumTrackTintColor={isEditable ? 'white' : '#B4D6FF'}
                         thumbTintColor='#B4D6FF'
                         value={item.Sliders[2]}
+                        disabled={!isEditable} // Slidersarna blir inaktiverade när recensionen inte är i redigeringsläge
                     />
 
                 </View>
@@ -169,6 +172,12 @@ const styles = StyleSheet.create({
     },
     informationContainer: {
         flexDirection: 'row',
+    },
+
+
+    disabled: {
+        color: '#B4D6FF'
+
     }
 
 });
