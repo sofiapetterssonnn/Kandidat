@@ -3,25 +3,12 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { AntDesign } from '@expo/vector-icons'; 
 
-function NextButton(image) {
-    
-    const navigation = useNavigation()
-    return (
-        <TouchableOpacity style={styles.nextButtonText} 
-            onPress={() => {
-            navigation.navigate("Writereview")
-            console.log(image)
-            }}
-         
-        >
-            <Text style={styles.nextButtonText}>NEXT</Text>
-        </TouchableOpacity>
-    );
-  }
+
+
 
   function GoBackButton (props) {
     const navigation = useNavigation()
@@ -39,8 +26,31 @@ function NextButton(image) {
 export default function PostScreen() {
     const [restaurant, setRestaurant] = useState('');
     const [image, setImage] = useState(null);
+    const route = useRoute();
+    const {place,location}  = route.params;
+    console.log(location)
+
    
     const navigation = useNavigation()
+
+    function NextButton() {
+        const navigation = useNavigation()
+        return (
+            <TouchableOpacity style={styles.nextButtonText} 
+                onPress={() => {
+                navigation.navigate("Writereview",{ 
+                    place: place,
+                    location: location,
+                    url: image,
+                   
+                  })
+                //console.log(image)
+                }}
+            >
+                <Text style={styles.nextButtonText}>NEXT</Text>
+            </TouchableOpacity>
+        );
+      }
 
     const handleImageSelect = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -53,16 +63,19 @@ export default function PostScreen() {
             aspect: [1, 1],
             quality: 1,
         });
+       
 
         if (!result.canceled) {
-            //const { uri } = result;
+           // const { uri } = result;
             setImage(result.assets[0].uri)
+            console.log(result.assets[0].uri)
+       
         }
     };
 
     return (
         <View style={styles.container}>
-            <NextButton image = {image} />
+            <NextButton/>
             <GoBackButton/>
             <View style={styles.imageContainer}>
                 {image ? (
@@ -80,7 +93,6 @@ export default function PostScreen() {
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {

@@ -16,13 +16,21 @@ export default function DropOnMap() {
     const [pin, setPin] = useState(null);
     const [region, setRegion] = useState(null);
     const [isEnabled, setIsEnabled] = useState(false)
+    const [place, setPlace] = useState('')
+    const [location, setLocation] = useState([]);
+  
 
     function CreatePin(props) {
       const navigation = useNavigation()
       return (
           <TouchableOpacity style={isEnabled? styles.nextButton:styles.nextButtonDisabled} disabled={!isEnabled}
               onPress={() => {
-              navigation.navigate("Post")
+              
+              navigation.navigate("Post", { 
+                place: place,
+                location: location
+
+              })
               }}>
               
               <Text style={styles.nextButtonText}>CREATE PIN</Text>
@@ -59,11 +67,14 @@ export default function DropOnMap() {
         const placeName = details.name;
         setPin({ latitude, longitude });
         setRegion({ ...region, latitude, longitude });
+        setPlace(placeName)
+        setLocation([latitude, longitude])
         
-        await setDoc(doc(FIRESTORE_DB, "Places", placeName),{
+        
+       /*  await setDoc(doc(FIRESTORE_DB, "Places", placeName),{
             longitude: longitude,
             latitude: latitude,
-        });
+        }); */
     };
 
     const handleRemoveMarker = () => {
