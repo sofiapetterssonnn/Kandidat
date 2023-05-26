@@ -5,52 +5,54 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 
 
 
 
-  function GoBackButton (props) {
+function GoBackButton(props) {
     const navigation = useNavigation()
     return (
-        <TouchableOpacity style={styles.goBackButton} 
+        <TouchableOpacity style={styles.goBackButton}
             onPress={() => {
-            navigation.navigate("Tabs")
+                navigation.navigate("Tabs")
             }}
         >
             <AntDesign name="left" size={30} color="white" />
         </TouchableOpacity>
     );
-  }
+}
 
 export default function PostScreen() {
     const [restaurant, setRestaurant] = useState('');
     const [image, setImage] = useState(null);
+    const [imageSelected, setImageSelected] = useState(false);
     const route = useRoute();
-    const {place,location}  = route.params;
+    const { place, location } = route.params;
     console.log(location)
 
-   
+
     const navigation = useNavigation()
 
     function NextButton() {
         const navigation = useNavigation()
         return (
-            <TouchableOpacity style={styles.nextButtonText} 
+            <TouchableOpacity style={[styles.nextButtonText, { opacity: imageSelected ? 1 : 0.5 }]}
                 onPress={() => {
-                navigation.navigate("Writereview",{ 
-                    place: place,
-                    location: location,
-                    url: image,
-                   
-                  })
-                //console.log(image)
+                    navigation.navigate("Writereview", {
+                        place: place,
+                        location: location,
+                        url: image,
+
+                    })
+                    //console.log(image)
                 }}
+                disabled={!imageSelected} // Inaktivera knappen om ingen bild har valts
             >
                 <Text style={styles.nextButtonText}>NEXT</Text>
             </TouchableOpacity>
         );
-      }
+    }
 
     const handleImageSelect = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -63,20 +65,21 @@ export default function PostScreen() {
             aspect: [1, 1],
             quality: 1,
         });
-       
+
 
         if (!result.canceled) {
-           // const { uri } = result;
+            // const { uri } = result;
             setImage(result.assets[0].uri)
             console.log(result.assets[0].uri)
-       
+            setImageSelected(true);
+
         }
     };
 
     return (
         <View style={styles.container}>
-            <NextButton/>
-            <GoBackButton/>
+            <NextButton />
+            <GoBackButton />
             <View style={styles.imageContainer}>
                 {image ? (
                     <Image source={{ uri: image }} style={styles.image} resizeMode="contain" />
@@ -88,8 +91,8 @@ export default function PostScreen() {
                 <TouchableOpacity style={styles.changeImageButton} onPress={handleImageSelect}>
                     <Text style={styles.changeImageButtonText}>Change image</Text>
                 </TouchableOpacity>
-               
-            </View> 
+
+            </View>
         </View>
     );
 }
@@ -106,12 +109,12 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         alignItems: 'center',
-       marginTop: 60,
+        marginTop: 60,
     },
     image: {
         width: '100%',
         height: 400,
-        
+
     },
     imagePlaceholder: {
         width: '100%',
@@ -143,14 +146,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 10
     },
-    buttonOne:{
+    buttonOne: {
         backgroundColor: '#FDCB6E',
         borderRadius: 5,
         padding: 15,
         alignItems: 'center',
         marginBottom: 10
     },
-    nextButtonText:{
+    nextButtonText: {
         color: 'white',
         fontWeight: 'bold',
         fontSize: 20,
@@ -159,9 +162,9 @@ const styles = StyleSheet.create({
         marginEnd: 20,
         top: 30,
         right: 1,
-        zIndex:2,
-      },
-    goBackButton:{
+        zIndex: 2,
+    },
+    goBackButton: {
         color: 'white',
         fontWeight: 'bold',
         fontSize: 25,
@@ -169,10 +172,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         marginEnd: 20,
         top: 55,
-        zIndex:2,
+        zIndex: 2,
         left: 20,
     },
-    changeImageButtonText:{
+    changeImageButtonText: {
         color: 'white',
         fontSize: 16,
         textDecorationLine: 'underline'
