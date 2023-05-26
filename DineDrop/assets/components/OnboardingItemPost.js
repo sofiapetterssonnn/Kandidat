@@ -4,7 +4,7 @@ import PublishedPost from '../components/publishedPost.js';
 
 export default OnboradingItemPost = ({item}) => {
     const {width} = useWindowDimensions();
-    console.log("hejsan", item)
+    //console.log("hejsan", item)
 
     return (
         <View style={[styles.container, {width}]}>

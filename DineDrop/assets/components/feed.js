@@ -10,7 +10,7 @@ import PaginatorPost from '../components/paginatorPost.js';
 
 
 
-export default function Feed() {
+export default function Feed(locRoom) {
   const auth = getAuth();
   const user = auth.currentUser;
   const isFocused = useIsFocused();
@@ -18,63 +18,89 @@ export default function Feed() {
   const [lastName, setLastName] = useState('');
   const [userReviews, setUserReviews] = useState([]);
   const [activeReviewIndex, setActiveReviewIndex] = useState(0);
+  const [place, setPlace]= useState('');
+  const [users, setUsers] = useState([]);
+  console.log('hej',locRoom)
+  
 
 
-const [currentIndex, setCurrentIndex] = useState(0)
-const scrollx = useRef(new Animated.Value(0)).current;
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const scrollx = useRef(new Animated.Value(0)).current;
+
+  const fetchPlace = async () => {
+
+    const q = query(collection(FIRESTORE_DB, "Places"), where("latitude", "==", locRoom.location[0]), where("longitude", "==", locRoom.location[1]));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id)
+      setPlace(doc.id)
+
+    },);
+  
+
+  };
+
+
+  const fetchUsers = async (user) => {
+    console.log('Vendi')
+    const docRef = doc(FIRESTORE_DB, "Users", user);
+    const docSnap = await getDoc(docRef);
+    const newUser = []
+
+    if (docSnap.exists()) {
+
+
+        newUser.push([docSnap.data().firstname, docSnap.data().lastname]);              
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+    setUsers(users=>[...users, ...newUser])
+};
+
+
+  const fetchReviews = async () => {
+        
+    const q = query(collection(FIRESTORE_DB, "Reviews"), where("Room", "==", locRoom.RoomId), where("Place", "==", place));
+    const querySnapshot = await getDocs(q);
+    const newReviews = [];
+
+    querySnapshot.forEach(async (doc) => {
+      //console.log('sofia', doc.data())
+      newReviews.push(doc.data())
+      await fetchUsers(doc.data().User);
+      
+       // console.log(latitude)
+      // doc.data() is never undefined for query doc snapshots
+    },);
+    setUserReviews(newReviews)
+
+  };
+  
+  useEffect( () => {
+     fetchPlace()
+     fetchReviews();
+     
+  },[place])
+  
+
+
+
+
 
 const viewableItemsChanged = useRef(({viewableItems}) => {
   setCurrentIndex(viewableItems[0].index);
 }).current;
 
-
 const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
 
-
- 
-  useEffect(() => {
-    const fetchUser = async () => {
-
-      const docRef = doc(FIRESTORE_DB, 'Users', user.uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        setFirstName(docSnap.data().firstname);
-        setLastName(docSnap.data().lastname);
-        console.log(firstName, lastName)
-      } else {
-        console.log('No such document!');
-      }
-    };
-
-    const fetchUserReviews = async () => {
-
-      const q = query(collection(FIRESTORE_DB, "Reviews"), where("User", "==", user.uid));
-      const querySnapshot = await getDocs(q);
-      const newReviews = [];
-
-      querySnapshot.forEach((doc) => {
-
-        newReviews.push(doc.data())
-
-      },);
-      console.log(newReviews)
-      setUserReviews(newReviews)
-
-    };
-
-    if (isFocused) {
-      fetchUser();
-      fetchUserReviews();
-    }
-  }, [user.uid, isFocused]);
-
- 
   return (
     <View style={styles.container}>
     <View style={styles.container2}>
         <View style={{flex: 3}}>
-
           <FlatList
           data={userReviews} 
           /* renderItem={({item}) => <PublishedPost text={item.text} username={item.username} />} */

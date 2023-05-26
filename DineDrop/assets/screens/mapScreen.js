@@ -56,7 +56,7 @@ export default function MapScreen() {
     const [sliders, setSliders] = useState([]);
     const [Reviews, setReviews] = useState([])
     const navigation = useNavigation()
-  
+    const [pinLocation, setPinLocation] = useState([])
     const [locations, setLocations] = useState([]);
     const [users, setUsers] = useState([]);
 
@@ -195,9 +195,12 @@ export default function MapScreen() {
 
     const [showFeed, setFeed] =useState(false);
 
-    const onPressHandler = () => {
+    const onPressHandler = async (location) => {
+      console.log(RoomId)
+      await setPinLocation(location)
       Keyboard.dismiss()
       setFeed(!showFeed);
+
     };
 
     return (
@@ -205,7 +208,7 @@ export default function MapScreen() {
         <View style={{  flex: 1 ,  alignItems: 'center'}}>
             <GoBackButton/>
             <EditButton/>
-           {showFeed&&<Feed/>} 
+           {showFeed&&<Feed location = {pinLocation} RoomId = {RoomId}/>} 
           
           {region && (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -243,7 +246,7 @@ export default function MapScreen() {
                 latitude: location[0],
                 longitude: location[1],
                 }}
-                onPress={onPressHandler}
+                 onPress={() => onPressHandler(location)} 
                
                /*  onPress={() => {
                   console.log('pin is tapped');

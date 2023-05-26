@@ -46,6 +46,9 @@ const PublishedPost = ({ item }) => {
             <View style={styles.imageContainer}>
                 {/* <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" /> */}
             </View>
+            <View style={styles.placeText}>
+                <Text style={styles.ptext}>{item.User} </Text>
+            </View>
             <View style={styles.informationContainer}>
                 <View style={styles.sliders}>
                     <Slider
