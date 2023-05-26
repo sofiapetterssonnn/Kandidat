@@ -9,16 +9,9 @@ import { FIRESTORE_DB } from '../../config';
 import OnboardingItemPost from '../components/OnboardingItemPost.js';
 import PaginatorPost from '../components/paginatorPost.js';
 
-function SettingsButton(props) {
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-      <Ionicons style={styles.button} name="ios-settings-outline" size={30} color="#1B2156" />
-    </TouchableOpacity>
-  );
-}
 
-export default function ProfileScreen() {
+
+export default function Feed() {
   const auth = getAuth();
   const user = auth.currentUser;
   const isFocused = useIsFocused();
@@ -26,8 +19,7 @@ export default function ProfileScreen() {
   const [lastName, setLastName] = useState('');
   const [userReviews, setUserReviews] = useState([]);
   const [activeReviewIndex, setActiveReviewIndex] = useState(0);
-  /* const scrollX = useRef(new Animated.Value(0)).current;
-  const screenWidth = Dimensions.get('window').width; */
+
 
 const [currentIndex, setCurrentIndex] = useState(0)
 const scrollx = useRef(new Animated.Value(0)).current;
@@ -36,19 +28,10 @@ const viewableItemsChanged = useRef(({viewableItems}) => {
   setCurrentIndex(viewableItems[0].index);
 }).current;
 
-/* const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
 
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const scrollx = useRef(new Animated.Value(0)).current;
- */
-  //testSTART
-  /* const viewableItemsChanged = useRef(({viewableItems}) => {
-  setCurrentIndex(viewableItems[0].index);
-  }).current; */
+const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
 
-  const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
 
-  //testEND
  
   useEffect(() => {
     const fetchUser = async () => {
@@ -73,9 +56,6 @@ const viewableItemsChanged = useRef(({viewableItems}) => {
 
       querySnapshot.forEach((doc) => {
 
-        // doc.data() is never undefined for query doc snapshots
-
-
         newReviews.push(doc.data())
 
       },);
@@ -90,31 +70,10 @@ const viewableItemsChanged = useRef(({viewableItems}) => {
     }
   }, [user.uid, isFocused]);
 
- /*  const handleSwipeLeft = () => {
-    if (activeReviewIndex < userReviews.length - 1) {
-      setActiveReviewIndex(activeReviewIndex + 1);
-    }
-  };
-
-  const handleSwipeRight = () => {
-    if (activeReviewIndex > 0) {
-      setActiveReviewIndex(activeReviewIndex - 1);
-    }
-  };
- */
+ 
   return (
     <View style={styles.container}>
-      <View style={styles.profileContainer}>
-        <SettingsButton />
-        <View style={styles.userInformation}>
-          <Ionicons style={styles.profileIcon} name="person" size={40} color={'#B4D6FF'} />
-          <View>
-            <Text style={styles.usernameText}>{user.displayName}</Text>
-            <Text style={styles.nameText}>{firstName} {lastName}</Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.container2}>
+    <View style={styles.container2}>
         <View style={{flex: 3}}>
 
           <FlatList
@@ -138,7 +97,6 @@ const viewableItemsChanged = useRef(({viewableItems}) => {
         <View style={styles.paginatorContainer}>
           <PaginatorPost data={userReviews} scrollx={scrollx}/>
         </View>
-        
       </View>
     </View>
   );
@@ -146,58 +104,25 @@ const viewableItemsChanged = useRef(({viewableItems}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+   marginTop: 150,
+    //flex: 1,
+    width: '100%',
+    height: '70%',
+    //backgroundColor: 'red',
     backgroundColor: '#1B2156',
     justifyContent: 'center',
-  },
-  profileContainer: {
-    backgroundColor: '#FFFFFF',
-    width: '100%',
-    height: '20%',
-  },
-  profileIcon: {
-    marginTop: 20,
-    marginLeft: 30,
-    width: 40,
-  },
-  button: {
-    backgroundColor: 'black',
-    padding: 10,
-    position: 'absolute',
-    backgroundColor: 'transparent',
-    top: 55,
-    width: 50,
-    marginLeft: 310,
-
-  },
-  nameText: {
-    color: '#B4D6FF',
-    fontWeight: 'bold',
-    fontSize: 23,
-    paddingTop: 8,
-    marginLeft: 20,
-  },
-
-  usernameText: {
-    color: "#1B2156",
-    fontSize: 15,
-    paddingTop: 10,
-    marginLeft: 20
-  },
-  userInformation: {
-    flexDirection: 'row',
-    top: 75,
-    width: '55%'
+    //alignItems: 'center',
+   
   },
   container2: {
-    marginTop: 10,
+    marginTop: 30,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
   paginatorContainer:{
-    flex: 0.6,
-   
+    flex: 0.1,
+    marginBottom: 10,
   }
  
 });

@@ -44,7 +44,7 @@ const PublishedPost = () => {
             </TouchableOpacity>
 
             <View style={styles.imageContainer}>
-                <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
+                {/* <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" /> */}
             </View>
         <View style={styles.informationContainer}>
         <View style={styles.sliders}>

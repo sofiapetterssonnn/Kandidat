@@ -16,6 +16,7 @@ import NewPasswordScreen from './assets/screens/newPasswordScreen.js';
 import WriteReview from './assets/components/createPost/writeReview.js';
 import DropOnMap from './assets/components/createPost/dropOnMap.js';
 import ChooseRoom from './assets/components/createPost/chooseRoom.js';
+import Feed from './assets/components/feed.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -80,6 +81,10 @@ export default function App() {
       <Stack.Screen  options={{headerShown: false}}
        name="ChooseRoom" 
        component={ChooseRoom} />
+
+      <Stack.Screen  options={{headerShown: false}}
+       name="Feed" 
+       component={Feed} />
 
       </Stack.Navigator>
     </NavigationContainer>
