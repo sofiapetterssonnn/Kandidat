@@ -29,27 +29,27 @@ export default function ProfileScreen() {
   /* const scrollX = useRef(new Animated.Value(0)).current;
   const screenWidth = Dimensions.get('window').width; */
 
-const [currentIndex, setCurrentIndex] = useState(0)
-const scrollx = useRef(new Animated.Value(0)).current;
-
-const viewableItemsChanged = useRef(({viewableItems}) => {
-  setCurrentIndex(viewableItems[0].index);
-}).current;
-
-/* const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
-
   const [currentIndex, setCurrentIndex] = useState(0)
   const scrollx = useRef(new Animated.Value(0)).current;
- */
+
+  const viewableItemsChanged = useRef(({ viewableItems }) => {
+    setCurrentIndex(viewableItems[0].index);
+  }).current;
+
+  /* const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
+  
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const scrollx = useRef(new Animated.Value(0)).current;
+   */
   //testSTART
   /* const viewableItemsChanged = useRef(({viewableItems}) => {
   setCurrentIndex(viewableItems[0].index);
   }).current; */
 
-  const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
+  const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
   //testEND
- 
+
   useEffect(() => {
     const fetchUser = async () => {
 
@@ -90,18 +90,18 @@ const viewableItemsChanged = useRef(({viewableItems}) => {
     }
   }, [user.uid, isFocused]);
 
- /*  const handleSwipeLeft = () => {
-    if (activeReviewIndex < userReviews.length - 1) {
-      setActiveReviewIndex(activeReviewIndex + 1);
-    }
-  };
-
-  const handleSwipeRight = () => {
-    if (activeReviewIndex > 0) {
-      setActiveReviewIndex(activeReviewIndex - 1);
-    }
-  };
- */
+  /*  const handleSwipeLeft = () => {
+     if (activeReviewIndex < userReviews.length - 1) {
+       setActiveReviewIndex(activeReviewIndex + 1);
+     }
+   };
+ 
+   const handleSwipeRight = () => {
+     if (activeReviewIndex > 0) {
+       setActiveReviewIndex(activeReviewIndex - 1);
+     }
+   };
+  */
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
@@ -115,30 +115,30 @@ const viewableItemsChanged = useRef(({viewableItems}) => {
         </View>
       </View>
       <View style={styles.container2}>
-        <View style={{flex: 3}}>
+        <View style={{ flex: 3 }}>
 
           <FlatList
-          data={userReviews} 
-          /* renderItem={({item}) => <PublishedPost text={item.text} username={item.username} />} */
-          renderItem={({item}) => <OnboardingItemPost item= {item}/>}
-          keyExtractor={(item, index) => index.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          bounces={false}
-          onScroll={Animated.event([{ nativeEvent: {contentOffset: {x:scrollx} } }], { useNativeDriver: false })}
-          
-          scrollEventThrottle={32}
-          onViewableItemsChanged={viewableItemsChanged}
-          viewabilityConfig={viewConfig}
+            data={userReviews}
+            /* renderItem={({item}) => <PublishedPost text={item.text} username={item.username} />} */
+            renderItem={({ item }) => <OnboardingItemPost item={item} />}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled
+            bounces={false}
+            onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollx } } }], { useNativeDriver: false })}
+
+            scrollEventThrottle={32}
+            onViewableItemsChanged={viewableItemsChanged}
+            viewabilityConfig={viewConfig}
           //ref={slidesRef}
           />
-        
+
         </View>
         <View style={styles.paginatorContainer}>
-          <PaginatorPost data={userReviews} scrollx={scrollx}/>
+          <PaginatorPost data={userReviews} scrollx={scrollx} />
         </View>
-        
+
       </View>
     </View>
   );
@@ -195,9 +195,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  paginatorContainer:{
+  paginatorContainer: {
     flex: 0.6,
-   
+
   }
- 
+
 });
