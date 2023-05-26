@@ -52,15 +52,11 @@ export default function MapScreen() {
     const [region, setRegion] = useState(null);
     const route = useRoute();
     const {RoomId}  = route.params;
-<<<<<<< HEAD
-    const [Reviews, setReviews] = useState([]);
     const [texts, setText] = useState([]);
     const [sliders, setSliders] = useState([]);
-=======
     const [Reviews, setReviews] = useState([])
     const navigation = useNavigation()
   
->>>>>>> pin
     const [locations, setLocations] = useState([]);
     const [users, setUsers] = useState([]);
 

@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { getAuth } from 'firebase/auth';
 import { doc, getDocs, getDoc, query, collection, where } from 'firebase/firestore';
-import PublishedPost from '../components/publishedPost.js';
 import { FIRESTORE_DB } from '../../config';
 import OnboardingItemPost from '../components/OnboardingItemPost.js';
 import PaginatorPost from '../components/paginatorPost.js';
