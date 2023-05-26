@@ -17,10 +17,11 @@ import { AntDesign } from '@expo/vector-icons';
 
 export default function WriteReview() {
     const route = useRoute();
-    const {place, location, url}  = route.params;
+    const { place, location, url } = route.params;
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
     const [range1, setRange1] = useState('50%');
+    const [isReviewFilled, setIsReviewFilled] = useState(false);
     const [sliding1, setSliding1] = useState('Inactive');
 
     const [range2, setRange2] = useState('50%');
@@ -29,43 +30,44 @@ export default function WriteReview() {
     const [range3, setRange3] = useState('50%');
     const [sliding3, setSliding3] = useState('Inactive');
 
-    function GoBackButton () {
+    function GoBackButton() {
         const navigation = useNavigation()
         return (
-           <TouchableOpacity style={styles.goBackButton} 
+            <TouchableOpacity style={styles.goBackButton}
                 onPress={() => {
-                navigation.navigate("Post", {
-                    place: place,
-                    location: location
-                })
+                    navigation.navigate("Post", {
+                        place: place,
+                        location: location
+                    })
                 }}
             >
-    
+
                 <AntDesign name="left" size={30} color="white" />
             </TouchableOpacity>
-    
+
         );
-      }
+    }
 
     function NextButton() {
         const navigation = useNavigation()
         return (
-            <TouchableOpacity style={styles.nextButtonText} 
+            <TouchableOpacity style={[styles.nextButtonText, { opacity: isReviewFilled ? 1 : 0.5 }]}
                 onPress={() => {
-                navigation.navigate("ChooseRoom",{ 
-                    place: place,
-                    location: location,
-                    text: review,
-                    url : url,
-                    sliders: [range1,range2, range3]
-                  } )
+                    navigation.navigate("ChooseRoom", {
+                        place: place,
+                        location: location,
+                        text: review,
+                        url: url,
+                        sliders: [range1, range2, range3]
+                    })
                 }}
+                disabled={!isReviewFilled} // Inaktivera knappen om textrutan är tom
             >
-            <Text style={styles.nextButtonText}>NEXT</Text>
-                
+                <Text style={styles.nextButtonText}>NEXT</Text>
+
             </TouchableOpacity>
         );
-      }
+    }
 
     const handleRating = (newRating) => {
         setRating(newRating);
@@ -75,69 +77,72 @@ export default function WriteReview() {
         // Lägg till Kod här för att skicka review till databasen
     };
 
-    return(
+    return (
         <View style={styles.container}>
-        <GoBackButton/>
-        <NextButton/>
+            <GoBackButton />
+            <NextButton />
             <TextInput
-                    style={styles.reviewInput}
-                    placeholder="Write your review..."
-                    value={review}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    onChangeText={setReview}
-                    multiline
-                />
-        {/* <Text style={{fontSize:20, fontWeight: 'bold'}}>{range1}</Text>
+                style={styles.reviewInput}
+                placeholder="Write your review..."
+                value={review}
+                autoCapitalize="none"
+                autoCorrect={false}
+                onChangeText={text => {
+                    setReview(text);
+                    setIsReviewFilled(text.trim().length > 0);
+                }}
+                multiline
+            />
+            {/* <Text style={{fontSize:20, fontWeight: 'bold'}}>{range1}</Text>
         <Text style={{fontSize:20, fontWeight: 'bold'}}>{sliding1}</Text> */}
 
-        <Slider
-        style={{padding:10, height:40, marginTop:50}}
-        minimumValue={0}
-        maximumValue={1}
-        minimumTrackTintColor='#B4D6FF'
-        maximumTrackTintColor='white'
-        thumbTintColor='#B4D6FF'
-        value={0.5}
-        onValueChange={value => setRange1(parseInt(value * 100)+ '%')}
-        onSlidingStart={()=> setSliding1('Sliding')}
-        onSlidingComplete={()=> setSliding1('Inactive')}
-        />
+            <Slider
+                style={{ padding: 10, height: 40, marginTop: 50 }}
+                minimumValue={0}
+                maximumValue={1}
+                minimumTrackTintColor='#B4D6FF'
+                maximumTrackTintColor='white'
+                thumbTintColor='#B4D6FF'
+                value={0.5}
+                onValueChange={value => setRange1(parseInt(value * 100) + '%')}
+                onSlidingStart={() => setSliding1('Sliding')}
+                onSlidingComplete={() => setSliding1('Inactive')}
+            />
 
-        {/* <Text style={{fontSize:20, fontWeight: 'bold'}}>{range2}</Text>
+            {/* <Text style={{fontSize:20, fontWeight: 'bold'}}>{range2}</Text>
         <Text style={{fontSize:20, fontWeight: 'bold'}}>{sliding2}</Text> */}
 
-        <Slider
-        style={{padding:10, height:40, marginTop:50}}
-        minimumValue={0}
-        maximumValue={1}
-        minimumTrackTintColor='#B4D6FF'
-        maximumTrackTintColor='white'
-        thumbTintColor='#B4D6FF'
-        value={0.5}
-        onValueChange={value => setRange2(parseInt(value * 100)+ '%')}
-        onSlidingStart={()=> setSliding2('Sliding')}
-        onSlidingComplete={()=> setSliding2('Inactive')}
-        />
+            <Slider
+                style={{ padding: 10, height: 40, marginTop: 50 }}
+                minimumValue={0}
+                maximumValue={1}
+                minimumTrackTintColor='#B4D6FF'
+                maximumTrackTintColor='white'
+                thumbTintColor='#B4D6FF'
+                value={0.5}
+                onValueChange={value => setRange2(parseInt(value * 100) + '%')}
+                onSlidingStart={() => setSliding2('Sliding')}
+                onSlidingComplete={() => setSliding2('Inactive')}
+            />
 
-        {/* <Text style={{fontSize:20, fontWeight: 'bold'}}>{range3}</Text>
+            {/* <Text style={{fontSize:20, fontWeight: 'bold'}}>{range3}</Text>
         <Text style={{fontSize:20, fontWeight: 'bold'}}>{sliding3}</Text> */}
 
-        <Slider
-        style={{padding:10, height:40, marginTop:50}}
-        minimumValue={0}
-        maximumValue={1}
-        minimumTrackTintColor='#B4D6FF'
-        maximumTrackTintColor='white'
-        thumbTintColor='#B4D6FF'
-        value={0.5}
-        onValueChange={value => setRange3(parseInt(value * 100)+ '%')}
-        onSlidingStart={()=> setSliding3('Sliding')}
-        onSlidingComplete={()=> setSliding3('Inactive')}
-        />
+            <Slider
+                style={{ padding: 10, height: 40, marginTop: 50 }}
+                minimumValue={0}
+                maximumValue={1}
+                minimumTrackTintColor='#B4D6FF'
+                maximumTrackTintColor='white'
+                thumbTintColor='#B4D6FF'
+                value={0.5}
+                onValueChange={value => setRange3(parseInt(value * 100) + '%')}
+                onSlidingStart={() => setSliding3('Sliding')}
+                onSlidingComplete={() => setSliding3('Inactive')}
+            />
 
         </View>
-        
+
     );
 
 
@@ -159,7 +164,7 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top',
         marginTop: 100,
     },
-    goBackButton:{
+    goBackButton: {
         color: 'white',
         fontWeight: 'bold',
         fontSize: 25,
@@ -167,18 +172,18 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         marginEnd: 20,
         top: 55,
-        zIndex:2,
+        zIndex: 2,
         left: 20,
     },
-        nextButtonText:{
-            color: 'white',
-            fontWeight: 'bold',
-            fontSize: 20,
-            position: 'absolute',
-            backgroundColor: 'transparent',
-            marginEnd: 20,
-            top: 30,
-            right: 1,
-            zIndex:2,
-          },
+    nextButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 20,
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        marginEnd: 20,
+        top: 30,
+        right: 1,
+        zIndex: 2,
+    },
 })
