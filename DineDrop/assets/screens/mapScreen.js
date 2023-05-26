@@ -48,30 +48,44 @@ export default function MapScreen() {
     const [region, setRegion] = useState(null);
     const route = useRoute();
     const {RoomId}  = route.params;
-    const [Reviews, setReviews] = useState([])
-  
+    const [Reviews, setReviews] = useState([]);
+    const [texts, setText] = useState([]);
+    const [sliders, setSliders] = useState([]);
     const [locations, setLocations] = useState([]);
+    const [users, setUsers] = useState([]);
 
-    console.log(locations)
+    //console.log(locations)
+    //console.log(users)
 
     const fetchLocation = async (place) => {
-      
         const docRef = doc(FIRESTORE_DB, "Places", place);
         const docSnap = await getDoc(docRef);
         const newLocation = []
     
-        
         if (docSnap.exists()) {
-            newLocation.push([docSnap.data().latitude, docSnap.data().longitude]);           
-            
+            newLocation.push([docSnap.data().latitude, docSnap.data().longitude]);              
         } else {
           // docSnap.data() will be undefined in this case
           console.log("No such document!");
-
         }
         setLocations(locations=>[...locations, ...newLocation])
-        
     };
+
+    const fetchUsers = async (user) => {
+        const docRef = doc(FIRESTORE_DB, "Users", user);
+        const docSnap = await getDoc(docRef);
+        const newUser = []
+    
+        if (docSnap.exists()) {
+            newUser.push([docSnap.data().firstname, docSnap.data().lastname]);              
+        } else {
+          // docSnap.data() will be undefined in this case
+          console.log("No such document!");
+        }
+        setUsers(users=>[...users, ...newUser])
+    };
+
+
     //Get pins from users in room
     useEffect(()=> {
       console.log(RoomId)
@@ -80,22 +94,42 @@ export default function MapScreen() {
         const q = query(collection(FIRESTORE_DB, "Reviews"), where("Room", "==", RoomId));
         const querySnapshot = await getDocs(q);
         const review = {}
+        const newText = [];
+        const newSliders = [];
 
 
         querySnapshot.forEach(async (doc) => {
             
             const place = doc.data().Place;
-       
+            const user = doc.data().User
+            newText.push(doc.data().Text);
+            newSliders.push(doc.data().Sliders);
+            
+         
+            
             await fetchLocation(place);
+            await fetchUsers(user);
+            
+          
+            
             
            // console.log(latitude)
           // doc.data() is never undefined for query doc snapshots
         },);
-        
+        setText(newText)
+        setSliders(newSliders)
+
       };
+      
       fetchReviews();
 
+      
+
     },[]);
+
+    //useEffect(()=>{
+    //   console.log("ja", sliders)
+    //},[sliders])
 
     // Get the user's current location
     useEffect(() => {
