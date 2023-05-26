@@ -4,11 +4,12 @@ import PublishedPost from '../components/publishedPost.js';
 
 export default OnboradingItemPost = ({item}) => {
     const {width} = useWindowDimensions();
+    console.log("hejsan", item)
 
     return (
         <View style={[styles.container, {width}]}>
             
-            <PublishedPost text={item.text} username={item.username} />
+              <PublishedPost item= {item} />  
         </View>
     );
 };

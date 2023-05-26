@@ -4,15 +4,16 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 
-const PublishedPost = () => {
+const PublishedPost = ({item}) => {
 
+    console.log(item.Sliders)
     const [imageUrl, setImageUrl] = useState('');
     const [review, setReview] = useState('');
     
 
     // useEffect för att hämta data:
     useEffect(() => {
-        fetchData();
+      //  fetchData();
     }, []);
 
     const fetchData = () => {
@@ -28,14 +29,6 @@ const PublishedPost = () => {
         console.log('Redigera recension');
     };
 
-    const [range1, setRange1] = useState('50%');
-    const [sliding1, setSliding1] = useState('Inactive');
-
-    const [range2, setRange2] = useState('50%');
-    const [sliding2, setSliding2] = useState('Inactive');
-
-    const [range3, setRange3] = useState('50%');
-    const [sliding3, setSliding3] = useState('Inactive');
 
     return (
         <View style={styles.container}>
@@ -43,53 +36,49 @@ const PublishedPost = () => {
                 <MaterialCommunityIcons name="dots-horizontal" size={35} color="#B4D6FF" />
             </TouchableOpacity>
 
+            <View style={styles.placeText}>
+            <Text style={styles.ptext}>{item.Place} </Text>
+        </View>
+
             <View style={styles.imageContainer}>
-                <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
+                {/* <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" /> */}
             </View>
         <View style={styles.informationContainer}>
         <View style={styles.sliders}>
         <Slider
         style={{width:150, height:40, marginTop:5}}
         minimumValue={0}
-        maximumValue={1}
+        maximumValue={100}
         minimumTrackTintColor='#B4D6FF'
         maximumTrackTintColor='white'
         thumbTintColor='#B4D6FF'
-        value={0.5}
-        onValueChange={value => setRange1(parseInt(value * 100)+ '%')}
-        onSlidingStart={()=> setSliding1('Sliding')}
-        onSlidingComplete={()=> setSliding1('Inactive')}
+        value={item.Sliders[0]}
         />
 
         <Slider
         style={{width:150, height:40, marginTop:5}}
         minimumValue={0}
-        maximumValue={1}
+        maximumValue={100}
         minimumTrackTintColor='#B4D6FF'
         maximumTrackTintColor='white'
         thumbTintColor='#B4D6FF'
-        value={0.5}
-        onValueChange={value => setRange2(parseInt(value * 100)+ '%')}
-        onSlidingStart={()=> setSliding2('Sliding')}
-        onSlidingComplete={()=> setSliding2('Inactive')}
+        value={item.Sliders[1]}
         />
 
         <Slider
         style={{width:150, height:40, marginTop:5}}
         minimumValue={0}
-        maximumValue={1}
+        maximumValue={100}
         minimumTrackTintColor='#B4D6FF'
         maximumTrackTintColor='white'
         thumbTintColor='#B4D6FF'
-        value={0.5}
-        onValueChange={value => setRange3(parseInt(value * 100)+ '%')}
-        onSlidingStart={()=> setSliding3('Sliding')}
-        onSlidingComplete={()=> setSliding3('Inactive')}
+        value={item.Sliders[2]}
         />
+        
         </View>
 
         <View style={styles.reviewText}>
-            <Text style={styles.text} source={{review}} />
+            <Text style={styles.text}>"{item.Text}" </Text>
         </View>
         </View>
         
@@ -108,8 +97,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex',
         alignItems: 'center',
-        marginTop: 30,
-        backgroundColor: 'black',
+
+        marginBottom: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        backgroundColor: 'white',
+      
     },
     image: {
         width: '100%',
@@ -137,16 +130,35 @@ const styles = StyleSheet.create({
     },
     reviewText:{
         flex: 1,
-        backgroundColor: '#fff',
+      //  backgroundColor: '#fff',
         padding: 10,
         height: 120,
-        marginTop: 10,
+        marginTop: '5%',
+        marginLeft: '10%'
         
 
     },
+    placeText:{
+       // flex: 1,
+        //backgroundColor: '#fff',
+        padding: 10,
+      
+        marginTop: '5%',
+       // marginLeft: '10%',
+     
+
+    },
+    ptext:{
+        fontSize: 25,
+        color: 'white',
+        fontWeight: 'bold'
+    },
     text:{
         flex: 1,
-        color: 'black',
+        color: 'white',
+        fontSize: 15,
+        
+        
     },
     sliders:{
         backgroundColor: 'transparent',
