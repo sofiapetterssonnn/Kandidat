@@ -7,22 +7,6 @@ import { AntDesign } from '@expo/vector-icons';
 
 
 
-
-function GoBackButton (props) {
-    const navigation = useNavigation()
-    return (
-       <TouchableOpacity style={styles.goBackButton} 
-            onPress={() => {
-            navigation.navigate("Post")
-            }}
-        >
-
-            <AntDesign name="left" size={30} color="white" />
-        </TouchableOpacity>
-
-    );
-  }
-
 /*   const heart = () => {
     console.log('hej')
     return(
@@ -33,7 +17,7 @@ function GoBackButton (props) {
 
 export default function WriteReview() {
     const route = useRoute();
-    const {url}  = route.params;
+    const {place, location, url}  = route.params;
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
     const [range1, setRange1] = useState('50%');
@@ -45,12 +29,32 @@ export default function WriteReview() {
     const [range3, setRange3] = useState('50%');
     const [sliding3, setSliding3] = useState('Inactive');
 
+    function GoBackButton () {
+        const navigation = useNavigation()
+        return (
+           <TouchableOpacity style={styles.goBackButton} 
+                onPress={() => {
+                navigation.navigate("Post", {
+                    place: place,
+                    location: location
+                })
+                }}
+            >
+    
+                <AntDesign name="left" size={30} color="white" />
+            </TouchableOpacity>
+    
+        );
+      }
+
     function NextButton() {
         const navigation = useNavigation()
         return (
             <TouchableOpacity style={styles.nextButtonText} 
                 onPress={() => {
                 navigation.navigate("ChooseRoom",{ 
+                    place: place,
+                    location: location,
                     text: review,
                     url : url,
                     sliders: [range1,range2, range3]
