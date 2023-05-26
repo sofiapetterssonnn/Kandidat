@@ -25,6 +25,8 @@ export default function ProfileScreen() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userReviews, setUserReviews] = useState([]);
+  const [texts, setTexts] = useState([]);
+  const [sliders, setSliders] = useState([]);
   const [activeReviewIndex, setActiveReviewIndex] = useState(0);
   /* const scrollX = useRef(new Animated.Value(0)).current;
   const screenWidth = Dimensions.get('window').width; */
@@ -70,6 +72,8 @@ const viewableItemsChanged = useRef(({viewableItems}) => {
       const q = query(collection(FIRESTORE_DB, "Reviews"), where("User", "==", user.uid));
       const querySnapshot = await getDocs(q);
       const newReviews = [];
+      const newText = [];
+      const newSliders = [];
 
       querySnapshot.forEach((doc) => {
 
@@ -77,10 +81,16 @@ const viewableItemsChanged = useRef(({viewableItems}) => {
 
 
         newReviews.push(doc.data())
+        newText.push(doc.data().Text)
+        newSliders.push(doc.data().Sliders)
+        console.log("hej", doc.data())
 
       },);
-      console.log(newReviews)
+      console.log("hallå", newText)
+      console.log("tja", newSliders)
       setUserReviews(newReviews)
+      setTexts(newText)
+      setSliders(newSliders)
 
     };
 
@@ -121,6 +131,7 @@ const viewableItemsChanged = useRef(({viewableItems}) => {
           data={userReviews} 
           /* renderItem={({item}) => <PublishedPost text={item.text} username={item.username} />} */
           renderItem={({item}) => <OnboardingItemPost item= {item}/>}
+          
           keyExtractor={(item, index) => index.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}

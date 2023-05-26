@@ -34,7 +34,7 @@ export default function NewPasswordScreen(){
         setCurrentPassword
 
         const credential = EmailAuthProvider.credential(user.email, currentPassword);
-        console.log(credential)
+        //console.log(credential)
         // TODO(you): prompt the user to re-provide their sign-in credentials
         
         reauthenticateWithCredential(user, credential).then(() => {
