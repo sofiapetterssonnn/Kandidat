@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View,  Animated, useWindowDimensions} from 'react-native';
+import { StyleSheet, View,  Animated, useWindowDimensions} from 'react-native';
 
 
 export default PaginatorPost = ({data, scrollx}) => {
@@ -11,6 +11,7 @@ export default PaginatorPost = ({data, scrollx}) => {
                 const dotWidth = scrollx.interpolate ({
                     inputRange,
                     outputRange: [10, 10, 10],
+                
                     extrapolate: 'clamp',
 
                 });

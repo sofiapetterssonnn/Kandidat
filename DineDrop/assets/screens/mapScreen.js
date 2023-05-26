@@ -8,6 +8,8 @@ import * as Location from 'expo-location';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import Feed from '../components/feed';
+
 
 
 function GoBackButton (props) {
@@ -17,7 +19,8 @@ function GoBackButton (props) {
         <TouchableOpacity style={styles.goBackButton}
             onPress={() => {
             console.log('I am tapped');
-            navigation.goBack('Group')
+
+           navigation.goBack('Group')
             }}
         >
   
@@ -43,14 +46,21 @@ function EditButton (props){
     );
 }
 
+
 export default function MapScreen() {
     const [pin, setPin] = useState(null);
     const [region, setRegion] = useState(null);
     const route = useRoute();
     const {RoomId}  = route.params;
+<<<<<<< HEAD
     const [Reviews, setReviews] = useState([]);
     const [texts, setText] = useState([]);
     const [sliders, setSliders] = useState([]);
+=======
+    const [Reviews, setReviews] = useState([])
+    const navigation = useNavigation()
+  
+>>>>>>> pin
     const [locations, setLocations] = useState([]);
     const [users, setUsers] = useState([]);
 
@@ -187,13 +197,22 @@ export default function MapScreen() {
         });
     };
 
+    const [showFeed, setFeed] =useState(false);
+
+    const onPressHandler = () => {
+      Keyboard.dismiss()
+      setFeed(!showFeed);
+    };
+
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
         <View style={{  flex: 1 ,  alignItems: 'center'}}>
             <GoBackButton/>
             <EditButton/>
+           {showFeed&&<Feed/>} 
+          
           {region && (
-        
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <GooglePlacesAutocomplete
               placeholder="Search"
               fetchDetails={true}
@@ -216,7 +235,10 @@ export default function MapScreen() {
                 listView: { backgroundColor: 'white' },
               }}
             />
+          </TouchableWithoutFeedback>
           )}
+
+        
           <MapView style={styles.map} region={region} provider="google">
             {locations.map((location, index) => (
             <Marker 
@@ -225,23 +247,34 @@ export default function MapScreen() {
                 latitude: location[0],
                 longitude: location[1],
                 }}
+                onPress={onPressHandler}
+               
+               /*  onPress={() => {
+                  console.log('pin is tapped');
+                  //navigation.navigate('Feed')
+                  
+
+                }} */
+
                 pinColor="red"
             />
             ))}
             <Marker coordinate={pin} pinColor='red'>
-              <Callout>
-                <Button title="Delete pin" onPress={handleRemoveMarker} />
-              </Callout>
+           
             </Marker>
           </MapView>
+       
+
+          
           <TouchableOpacity
             style={styles.currentLocationButton}
             onPress={handleCurrentLocation}
           >
             <Text style={styles.currentLocationButtonText}>Current Location</Text>
           </TouchableOpacity>
+          
         </View>
-        </TouchableWithoutFeedback>
+     
       );
     }
 
@@ -271,7 +304,11 @@ const styles = StyleSheet.create({
       top: 40,
       right: 10,
       zIndex:2,
+    },
+    feed:{
+      zIndex:1,
     }
+  
 });
 
     

@@ -2,15 +2,9 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList, Animated} from 'rea
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useRef} from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { doc, getDoc } from "firebase/firestore"; 
-import { FIRESTORE_DB } from '../../config';
-
 import OnboardingItem from '../components/OnboardingItem';
 import slides from '../components/slides';
 import Paginator from  "../components/paginator";
-
-
-
 
 function LogInButton (props) {
     const navigation = useNavigation()
@@ -22,7 +16,7 @@ function LogInButton (props) {
             //console.log('I am tapped');
             navigation.navigate('Login')
             
-            }}
+          }}
         >
             <Text style={styles.buttonText}>LOG IN</Text>
         </TouchableOpacity>

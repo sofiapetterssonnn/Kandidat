@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   nameText: {
     color: '#B4D6FF',
     fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: 23,
     paddingTop: 8,
     marginLeft: 20,
   },
