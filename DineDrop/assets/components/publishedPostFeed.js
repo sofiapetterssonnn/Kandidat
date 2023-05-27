@@ -47,7 +47,7 @@ const PublishedPostFeed = ({ item }) => {
                 {/* <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" /> */}
             </View>
             <View style={styles.placeText}>
-                <Text style={styles.ptext}>{item.User} </Text>
+                <Text style={styles.ntext}>{item.User} </Text>
             </View>
             <View style={styles.informationContainer}>
                 <View style={styles.sliders}>
@@ -108,10 +108,10 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         flex: 1,
+        height: 150,
         justifyContent: 'flex',
         alignItems: 'center',
-
-        marginBottom: 20,
+        padding: 5,
         marginLeft: 10,
         marginRight: 10,
         backgroundColor: '#d9d9d9ff',
@@ -121,13 +121,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    reviewImage: {
-        width: 45,
-        height: 45,
-        marginRight: 10,
-        backgroundColor: '#B4D6FF'
-
-    },
+  
     reviewText: {
         color: '#B4D6FF',
         fontSize: 18,
@@ -167,6 +161,11 @@ const styles = StyleSheet.create({
         color: '#1B2156',
         fontWeight: 'bold'
     },
+    ntext: {
+        fontSize: 15,
+        color: '#1B2156',
+        fontWeight: 'bold'
+    },
     text: {
         flex: 1,
         color: '#B4D6FF',
@@ -176,6 +175,7 @@ const styles = StyleSheet.create({
     },
     sliders: {
         backgroundColor: 'transparent',
+        padding: 10
 
     },
     informationContainer: {

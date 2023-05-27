@@ -96,6 +96,7 @@ const PublishedPostFeed = ({ item }) => {
 const styles = StyleSheet.create({
     container: {
         //flex: 1,
+       // zIndex: 2,
         width: '90%',
         backgroundColor: 'white',
         height: '85%',

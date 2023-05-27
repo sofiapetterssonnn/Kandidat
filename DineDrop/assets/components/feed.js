@@ -124,10 +124,10 @@ const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
 
 const styles = StyleSheet.create({
   container: {
-   marginTop: 150,
+   //marginTop: 150,
     //flex: 1,
     width: '100%',
-    height: '70%',
+    height: '100%',
     //backgroundColor: 'red',
     //backgroundColor: '#1B2156',
     justifyContent: 'center',
@@ -136,14 +136,14 @@ const styles = StyleSheet.create({
    
   },
   container2: {
-    marginTop: 30,
+   // marginTop: 30,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
   paginatorContainer:{
+    
     flex: 0.1,
-    marginBottom: 10,
     marginTop: 19,
   }
  

@@ -195,6 +195,7 @@ export default function MapScreen() {
 
     const [showFeed, setFeed] =useState(false);
 
+
     const onPressHandler = async (location) => {
       console.log(RoomId)
       await setPinLocation(location)
@@ -206,12 +207,24 @@ export default function MapScreen() {
     return (
 
         <View style={{  flex: 1 ,  alignItems: 'center'}}>
+          
             <GoBackButton/>
             <EditButton/>
-           {showFeed&&<Feed location = {pinLocation} RoomId = {RoomId}/>} 
+            {showFeed?
+            ( <>
+              <TouchableOpacity
+                style={styles.close}
+                onPress={() => setFeed(false)}
+              />
+              <View style={styles.feed}>
+                <Feed location={pinLocation} RoomId={RoomId} />
+              </View>
+            </>
+           )
           
-          {region && (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          :
+         ( region && (
+       
         <GooglePlacesAutocomplete
               placeholder="Search"
               fetchDetails={true}
@@ -234,8 +247,8 @@ export default function MapScreen() {
                 listView: { backgroundColor: 'white' },
               }}
             />
-          </TouchableWithoutFeedback>
-          )}
+       
+          ) )}
 
         
           <MapView style={styles.map} region={region} provider="google">
@@ -284,7 +297,7 @@ const styles = StyleSheet.create({
     map: {
         width: '100%',
         height: '100%',
-        zIndex: 0,
+  
         
     },
     goBackButton:{
@@ -305,8 +318,17 @@ const styles = StyleSheet.create({
       zIndex:2,
     },
     feed:{
+     // backgroundColor: 'white',
+      marginTop:150,
+      position: 'absolute',
       zIndex:1,
-    }
+    },
+    close:{
+      ...StyleSheet.absoluteFillObject,
+     // backgroundColor:'black',
+      zIndex:1
+    },
+   
   
 });
 

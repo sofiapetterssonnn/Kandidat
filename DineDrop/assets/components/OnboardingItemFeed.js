@@ -4,7 +4,7 @@ import PublishedPostFeed from "./publishedPostFeed";
 
 export default OnboradingItemFeed = ({item}) => {
     const {width} = useWindowDimensions();
-    //console.log("hejsan", item)
+    console.log("hejsan")
 
     return (
         <View style={[styles.container, {width}]}>
