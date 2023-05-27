@@ -4,7 +4,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 
-const PublishedPost = ({ item }) => {
+const PublishedPostFeed = ({ item }) => {
 
     console.log(item.Sliders)
     const [imageUrl, setImageUrl] = useState('');
@@ -46,9 +46,7 @@ const PublishedPost = ({ item }) => {
             <View style={styles.imageContainer}>
                 {/* <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" /> */}
             </View>
-            <View style={styles.placeText}>
-                <Text style={styles.ptext}>{item.User} </Text>
-            </View>
+        
             <View style={styles.informationContainer}>
                 <View style={styles.sliders}>
                     <Slider
@@ -97,20 +95,22 @@ const PublishedPost = ({ item }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: '95%',
-        backgroundColor: '#1B2156',
-        height: '100%',
-        marginBottom: 60,
+        //flex: 1,
+        width: '90%',
+        backgroundColor: 'white',
+        height: '85%',
+        marginBottom:20,
+        borderRadius: 20,
+        
     },
     imageContainer: {
         flex: 1,
         justifyContent: 'flex',
         alignItems: 'center',
-
-        marginBottom: 20,
+        padding: 5,
         marginLeft: 10,
         marginRight: 10,
-        backgroundColor: 'white',
+        backgroundColor: '#d9d9d9ff',
 
     },
     image: {
@@ -131,6 +131,8 @@ const styles = StyleSheet.create({
     editButton: {
         position: 'absolute',
         right: 0.5,
+        marginRight:10,
+        marginTop:4
     },
     horizontalLine: {
         flex: 1,
@@ -152,29 +154,31 @@ const styles = StyleSheet.create({
         //backgroundColor: '#fff',
         padding: 10,
 
-        marginTop: '5%',
+        marginTop: '3%',
         // marginLeft: '10%',
 
 
     },
     ptext: {
         fontSize: 25,
-        color: 'white',
+        color: '#1B2156',
         fontWeight: 'bold'
     },
     text: {
         flex: 1,
-        color: 'white',
+        color: '#B4D6FF',
         fontSize: 15,
 
 
     },
     sliders: {
         backgroundColor: 'transparent',
+        padding: 10
 
     },
     informationContainer: {
         flexDirection: 'row',
+
     },
 
 
@@ -185,4 +189,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default PublishedPost;
+export default PublishedPostFeed;

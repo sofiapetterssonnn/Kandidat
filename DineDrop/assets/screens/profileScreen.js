@@ -13,7 +13,7 @@ function SettingsButton(props) {
   const navigation = useNavigation();
   return (
     <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-      <Ionicons style={styles.button} name="ios-settings-outline" size={30} color="#1B2156" />
+      <Ionicons style={styles.button} name="ios-settings-outline" size={25} color="#1B2156" />
     </TouchableOpacity>
   );
 }
@@ -124,6 +124,9 @@ export default function ProfileScreen() {
           </View>
         </View>
       </View>
+      <View>
+        <Text style={styles.myPins}>My pins</Text>
+      </View>
       <View style={styles.container2}>
         <View style={{ flex: 3 }}>
 
@@ -159,48 +162,58 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1B2156',
     justifyContent: 'center',
+    alignItems: 'center'
   },
   profileContainer: {
     backgroundColor: '#FFFFFF',
+
     width: '100%',
-    height: '20%',
+    height: '13%',
   },
   profileIcon: {
+    //backgroundColor: 'white',
     marginTop: 20,
-    marginLeft: 30,
+    marginLeft: 20,
     width: 40,
   },
   button: {
-    backgroundColor: 'black',
+   // backgroundColor: 'black',
     padding: 10,
     position: 'absolute',
     backgroundColor: 'transparent',
-    top: 55,
+    top: 50,
     width: 50,
-    marginLeft: 310,
+    marginLeft: '85%',
 
   },
   nameText: {
     color: '#B4D6FF',
     fontWeight: 'bold',
     fontSize: 23,
-    paddingTop: 8,
+    paddingTop: 2,
     marginLeft: 20,
   },
 
   usernameText: {
     color: "#1B2156",
     fontSize: 15,
-    paddingTop: 10,
+    paddingTop: 15,
     marginLeft: 20
   },
   userInformation: {
+   // backgroundColor: 'black',
     flexDirection: 'row',
-    top: 75,
-    width: '55%'
+    top: '10%',
+    width: '85%'
+  },
+  myPins:{
+    color: '#B4D6FF',
+    fontWeight: 'bold',
+    fontSize: 40,
+    marginTop: 35
+
   },
   container2: {
-    marginTop: 10,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
