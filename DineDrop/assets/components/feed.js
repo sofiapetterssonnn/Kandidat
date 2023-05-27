@@ -5,7 +5,7 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { getAuth } from 'firebase/auth';
 import { doc, getDocs, getDoc, query, collection, where } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../../config';
-import OnboardingItemPost from '../components/OnboardingItemPost.js';
+import OnboardingItemFeed from './OnboardingItemFeed';
 import PaginatorPost from '../components/paginatorPost.js';
 
 
@@ -86,11 +86,6 @@ export default function Feed(locRoom) {
      
   },[place])
   
-
-
-
-
-
 const viewableItemsChanged = useRef(({viewableItems}) => {
   setCurrentIndex(viewableItems[0].index);
 }).current;
@@ -104,7 +99,7 @@ const viewConfig = useRef({viewAreaCoveragePercentThreshold: 50}).current;
           <FlatList
           data={userReviews} 
           /* renderItem={({item}) => <PublishedPost text={item.text} username={item.username} />} */
-          renderItem={({item}) => <OnboardingItemPost item= {item}/>}
+          renderItem={({item}) => <OnboardingItemFeed item= {item}/>}
           keyExtractor={(item, index) => index.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -134,8 +129,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '70%',
     //backgroundColor: 'red',
-    backgroundColor: '#1B2156',
+    //backgroundColor: '#1B2156',
     justifyContent: 'center',
+    //paddingBottom:30,
     //alignItems: 'center',
    
   },
@@ -148,6 +144,7 @@ const styles = StyleSheet.create({
   paginatorContainer:{
     flex: 0.1,
     marginBottom: 10,
+    marginTop: 19,
   }
  
 });

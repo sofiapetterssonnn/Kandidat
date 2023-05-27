@@ -255,10 +255,10 @@ export default function MapScreen() {
 
                 }} */
 
-                pinColor="red"
+                pinColor="#B4D6FF"
             />
             ))}
-            <Marker coordinate={pin} pinColor='red'>
+            <Marker coordinate={pin} pinColor='#B4D6FF'>
            
             </Marker>
           </MapView>
