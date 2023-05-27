@@ -6,7 +6,7 @@ import Slider from '@react-native-community/slider';
 
 const PublishedPostFeed = ({ item }) => {
 
-    console.log(item.Sliders)
+    //console.log(item.Sliders)
     const [imageUrl, setImageUrl] = useState('');
     const [review, setReview] = useState('');
     const [isEditable, setIsEditable] = useState(false);

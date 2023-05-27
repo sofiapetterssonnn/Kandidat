@@ -6,7 +6,7 @@ import Slider from '@react-native-community/slider';
 
 const PublishedPostFeed = ({ item }) => {
 
-    console.log(item.Sliders)
+    //console.log(item.Sliders)
     const [imageUrl, setImageUrl] = useState('');
     const [review, setReview] = useState('');
     const [isEditable, setIsEditable] = useState(false);
@@ -47,7 +47,7 @@ const PublishedPostFeed = ({ item }) => {
                 {/* <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" /> */}
             </View>
             <View style={styles.placeText}>
-                <Text style={styles.ntext}>{item.User} </Text>
+                <Text style={styles.ntext}>{item.usersName} </Text>
             </View>
             <View style={styles.informationContainer}>
                 <View style={styles.sliders}>

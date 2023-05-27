@@ -29,7 +29,7 @@ export default function PostScreen() {
     const [imageSelected, setImageSelected] = useState(false);
     const route = useRoute();
     const { place, location } = route.params;
-    console.log(location)
+    //console.log(location)
 
 
     const navigation = useNavigation()
@@ -70,7 +70,7 @@ export default function PostScreen() {
         if (!result.canceled) {
             // const { uri } = result;
             setImage(result.assets[0].uri)
-            console.log(result.assets[0].uri)
+           // console.log(result.assets[0].uri)
             setImageSelected(true);
 
         }

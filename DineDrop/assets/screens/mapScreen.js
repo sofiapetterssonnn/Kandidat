@@ -94,7 +94,7 @@ export default function MapScreen() {
 
     //Get pins from users in room
     useEffect(()=> {
-      console.log(RoomId)
+      //console.log(RoomId)
       const fetchReviews = async () => {
         
         const q = query(collection(FIRESTORE_DB, "Reviews"), where("Room", "==", RoomId));
@@ -122,8 +122,8 @@ export default function MapScreen() {
            // console.log(latitude)
           // doc.data() is never undefined for query doc snapshots
         },);
-        setText(newText)
-        setSliders(newSliders)
+       // setText(newText)
+     //   setSliders(newSliders)
 
       };
       
@@ -159,7 +159,7 @@ export default function MapScreen() {
 
     const handlePlaceSelected = async (data, details) => {
         const { lat: latitude, lng: longitude } = details.geometry.location;
-        console.log(latitude,longitude);
+        //console.log(latitude,longitude);
         const placeName = details.name;
         //setPin({ latitude, longitude });
         setRegion({ ...region, latitude, longitude });

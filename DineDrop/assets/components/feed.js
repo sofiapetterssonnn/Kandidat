@@ -20,7 +20,7 @@ export default function Feed(locRoom) {
   const [activeReviewIndex, setActiveReviewIndex] = useState(0);
   const [place, setPlace]= useState('');
   const [users, setUsers] = useState([]);
-  console.log('hej',locRoom)
+ // console.log('hej',locRoom)
   
 
 
@@ -35,7 +35,7 @@ export default function Feed(locRoom) {
     querySnapshot.forEach((doc) => {
 
       // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id)
+     // console.log(doc.id)
       setPlace(doc.id)
 
     },);
@@ -45,20 +45,22 @@ export default function Feed(locRoom) {
 
 
   const fetchUsers = async (user) => {
-    console.log('Vendi')
+   
     const docRef = doc(FIRESTORE_DB, "Users", user);
     const docSnap = await getDoc(docRef);
-    const newUser = []
+    
 
     if (docSnap.exists()) {
-
-
-        newUser.push([docSnap.data().firstname, docSnap.data().lastname]);              
+ 
+      const name = docSnap.data().firstname + ' ' + docSnap.data().lastname
+      
+     return name;              
     } else {
+     
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
     }
-    setUsers(users=>[...users, ...newUser])
+
 };
 
 
@@ -69,14 +71,19 @@ export default function Feed(locRoom) {
     const newReviews = [];
 
     querySnapshot.forEach(async (doc) => {
-      //console.log('sofia', doc.data())
-      newReviews.push(doc.data())
-      await fetchUsers(doc.data().User);
+    
+      const user =  await fetchUsers(doc.data().User)
+      setUsers(user)
+      const newReview = doc.data()
+      newReview.usersName = user
+      newReviews.push(newReview)
+  
       
-       // console.log(latitude)
+       
       // doc.data() is never undefined for query doc snapshots
     },);
     setUserReviews(newReviews)
+   
 
   };
   
