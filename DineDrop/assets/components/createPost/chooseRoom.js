@@ -132,6 +132,7 @@ function GoBackButton () {
       
       const handlePress = (index) => {
         setRoomId(index)
+        console.log(roomId)
      //   handleSavePost(index)
       }
     
@@ -151,9 +152,11 @@ function GoBackButton () {
         <View style={styles.scrollContainer}>
         <ScrollView>
               {roomsName.map((room, index) => (
-                  <TouchableOpacity style={styles.roomContainer} key={index} onPress={() => handlePress(roomsID[index])} > 
+                  <TouchableOpacity style={[styles.roomContainer]} 
+                  key={index} onPress={() => handlePress(roomsID[index])} > 
             
-                    <Text style={styles.roomText} >{room}</Text>
+                    <Text style={[styles.roomText,
+                    roomId === roomsID[index] && styles.selectedRoomText,]} >{room}</Text>
                   </TouchableOpacity>
                 ))}
          </ScrollView>
@@ -211,8 +214,11 @@ const styles = StyleSheet.create({
       roomContainer:{
         marginTop: 10,
         margin:25,
-        borderTopColor: 'white',
+        alignItems: 'center',   
+      borderTopColor: 'white',
        
+        justifyContent: 'center'
+      
         //backgroundColor: 'white'
       },
       room: {
@@ -230,7 +236,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginTop: "2%",
         fontWeight: 'bold',
-        opacity: 0.8
+
       },
       scrollContainer:{
         marginTop: '20%',
@@ -246,4 +252,10 @@ const styles = StyleSheet.create({
         top: 30,
        
       },
+      selectedRoomText: {
+        color: 'darkgray',
+        textDecorationLine: 'underline'
+
+        // Add any other styles you want for the selected room text
+      }
 })
