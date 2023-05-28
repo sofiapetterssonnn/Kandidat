@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { getAuth } from "firebase/auth";
 import { addDoc, collection, setDoc, doc, query, where, getDocs} from 'firebase/firestore';
 import { FIREBASE_STORAGE } from '../../../config';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 
 
 //import { utils } from '@react-native-firebase/app';
@@ -55,19 +55,16 @@ function GoBackButton () {
         const filename = url.substring(url.lastIndexOf('/') + 1);
         const storage = getStorage();
         const storageRef = ref(storage, filename);
-       
         const response = await fetch(url)
         const blob = await response.blob()
-        console.log('Efter')
-        try{
-            uploadBytes(storageRef, blob)
-        .then((snapshot) => {
-            console.log('Uploaded an image!');
-        }) .catch((error) => {
-            console.error('Error uploading image:', error);
-         }) 
 
-        }catch(error){console.log(error)}
+  
+        
+        try{
+            uploadBytesResumable(storageRef, blob)  
+            console.log('Efter' , blob._data.name)  
+            console.log('Uploaded an image!');
+        }catch(error){ console.log('Error uploading image:', error);}
         
         
       
@@ -100,7 +97,7 @@ function GoBackButton () {
       }, [])
 
     const handleSavePost = async () => {
-      //  await submitPost()
+        await submitPost()
 
         console.log('save post')
     
@@ -110,7 +107,7 @@ function GoBackButton () {
         const docRef = await addDoc(collection(FIRESTORE_DB, "Reviews"), {
             Text: text,
             User: userId,
-            Picture: url,
+            Picture: url.substring(url.lastIndexOf('/') + 1),
             Place: place,
             Sliders: sliders,
             Room: roomId

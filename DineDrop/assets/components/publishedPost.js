@@ -1,8 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity , ActivityIndicator } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const PublishedPostFeed = ({ item }) => {
 
@@ -10,12 +11,32 @@ const PublishedPostFeed = ({ item }) => {
     const [imageUrl, setImageUrl] = useState('');
     const [review, setReview] = useState('');
     const [isEditable, setIsEditable] = useState(false);
-
+    console.log('Item', item.Sliders)
 
     // useEffect för att hämta data:
-    useEffect(() => {
+    const [url, setUrl] = useState('');
+    const [showImage, setShowImage] = useState(false)
+
+    // useEffect för att hämta data:
+     useEffect(() => {
         //  fetchData();
-    }, []);
+        const storage = getStorage();
+        getDownloadURL(ref(storage, item.Picture))
+        .then( (url) => {
+            // `url` is the download URL for 'images/stars.jpg'
+            console.log(url)
+            setUrl(url)
+            setShowImage(true)
+    
+           
+            
+          })
+          .catch((error) => {
+            // Handle any errors
+          });
+          
+    }, []); 
+    
 
     const fetchData = () => {
         const fetchedImageUrl =
@@ -44,8 +65,10 @@ const PublishedPostFeed = ({ item }) => {
             </View>
 
             <View style={styles.imageContainer}>
-                {/* <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" /> */}
-            </View>
+                <ActivityIndicator size="small" color="#B4D6FF" style={styles.loading}/>
+                
+                 {showImage? ( <Image source={{ uri: url }} style={styles.image} resizeMode="cover" /> ):(<View></View>)} 
+            </View> 
         
             <View style={styles.informationContainer}>
                 <View style={styles.sliders}>
@@ -106,15 +129,16 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         flex: 1,
-        justifyContent: 'flex',
+        justifyContent: 'center',
         alignItems: 'center',
         padding: 5,
         marginLeft: 10,
         marginRight: 10,
-        backgroundColor: '#d9d9d9ff',
+       // backgroundColor: '#d9d9d9ff',
 
     },
     image: {
+        zIndex:1,
         width: '100%',
         height: '100%',
     },
@@ -186,6 +210,9 @@ const styles = StyleSheet.create({
     disabled: {
         color: '#B4D6FF'
 
+    },
+    loading: {
+        position:'absolute',
     }
 
 });

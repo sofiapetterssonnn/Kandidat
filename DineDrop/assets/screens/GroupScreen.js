@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
    
   },
   roomContainer:{
-    marginTop: 10,
+    marginTop: 3,
     margin:25,
     borderTopColor: 'white',
     justifyContent: 'center',
