@@ -21,6 +21,7 @@ const PublishedPostFeed = ({ item }) => {
      useEffect(() => {
         //  fetchData();
         const storage = getStorage();
+        console.log('Här skrivs det ut')
         getDownloadURL(ref(storage, item.Picture))
         .then( (url) => {
             // `url` is the download URL for 'images/stars.jpg'
