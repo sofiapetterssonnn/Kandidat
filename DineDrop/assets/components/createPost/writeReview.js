@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image,  TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 
@@ -78,6 +78,7 @@ export default function WriteReview() {
     };
 
     return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
             <GoBackButton />
             <NextButton />
@@ -142,7 +143,7 @@ export default function WriteReview() {
             />
 
         </View>
-
+        </TouchableWithoutFeedback>
     );
 
 
@@ -163,6 +164,7 @@ const styles = StyleSheet.create({
         height: 120,
         textAlignVertical: 'top',
         marginTop: 100,
+        borderRadius: 10
     },
     goBackButton: {
         color: 'white',
