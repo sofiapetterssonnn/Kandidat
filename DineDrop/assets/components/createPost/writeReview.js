@@ -4,6 +4,10 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 
 import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
+
+
 
 
 
@@ -93,9 +97,11 @@ export default function WriteReview() {
                 }}
                 multiline
             />
+        
             {/* <Text style={{fontSize:20, fontWeight: 'bold'}}>{range1}</Text>
         <Text style={{fontSize:20, fontWeight: 'bold'}}>{sliding1}</Text> */}
-
+            <View style={styles.sliderHeart}>
+            
             <Slider
                 style={{ padding: 10, height: 40, marginTop: 50 }}
                 minimumValue={0}
@@ -108,10 +114,13 @@ export default function WriteReview() {
                 onSlidingStart={() => setSliding1('Sliding')}
                 onSlidingComplete={() => setSliding1('Inactive')}
             />
+            <AntDesign name="heart" size={24} color="white" />
+            </View>
 
             {/* <Text style={{fontSize:20, fontWeight: 'bold'}}>{range2}</Text>
         <Text style={{fontSize:20, fontWeight: 'bold'}}>{sliding2}</Text> */}
-
+            <View style={styles.money}>
+            
             <Slider
                 style={{ padding: 10, height: 40, marginTop: 50 }}
                 minimumValue={0}
@@ -124,10 +133,13 @@ export default function WriteReview() {
                 onSlidingStart={() => setSliding2('Sliding')}
                 onSlidingComplete={() => setSliding2('Inactive')}
             />
+            <FontAwesome name="money" size={24} color="white" />
+            </View>
 
             {/* <Text style={{fontSize:20, fontWeight: 'bold'}}>{range3}</Text>
         <Text style={{fontSize:20, fontWeight: 'bold'}}>{sliding3}</Text> */}
-
+            <View style={styles.glass}>
+            
             <Slider
                 style={{ padding: 10, height: 40, marginTop: 50 }}
                 minimumValue={0}
@@ -140,7 +152,9 @@ export default function WriteReview() {
                 onSlidingStart={() => setSliding3('Sliding')}
                 onSlidingComplete={() => setSliding3('Inactive')}
             />
+            <FontAwesome5 name="glass-cheers" size={24} color="white" />
 
+        </View>
         </View>
 
     );
@@ -186,4 +200,14 @@ const styles = StyleSheet.create({
         right: 1,
         zIndex: 2,
     },
+    sliderHeart:{
+        marginTop:5,
+    },
+    money:{
+        marginTop:5,
+    },
+    glass:{
+        marginTop:5,
+    },
+
 })

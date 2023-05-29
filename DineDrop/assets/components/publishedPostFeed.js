@@ -4,6 +4,10 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 
+import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
+
 const PublishedPostFeed = ({ item }) => {
 
     console.log(item.Sliders)
@@ -50,7 +54,9 @@ const PublishedPostFeed = ({ item }) => {
                 <Text style={styles.ptext}>{item.User} </Text>
             </View>
             <View style={styles.informationContainer}>
+
                 <View style={styles.sliders}>
+                <View style={styles.sliderHeart}>
                     <Slider
                         style={{ width: 150, height: 40, marginTop: 5 }}
                         minimumValue={0}
@@ -61,7 +67,9 @@ const PublishedPostFeed = ({ item }) => {
                         value={item.Sliders[0]}
                         disabled={!isEditable} // Slidersarna blir inaktiverade när recensionen inte är i redigeringsläge
                     />
-
+                    <AntDesign name="heart" size={15} color="#1B2156" />
+                    </View>
+                    <View style={styles.money}>
                     <Slider
                         style={{ width: 150, height: 40, marginTop: 5 }}
                         minimumValue={0}
@@ -72,7 +80,9 @@ const PublishedPostFeed = ({ item }) => {
                         value={item.Sliders[1]}
                         disabled={!isEditable} // Slidersarna blir inaktiverade när recensionen inte är i redigeringsläge
                     />
-
+                    <FontAwesome name="money" size={15} color="#1B2156" />
+                    </View>
+                    <View style={styles.glass}>
                     <Slider
                         style={{ width: 150, height: 40, marginTop: 5 }}
                         minimumValue={0}
@@ -83,6 +93,9 @@ const PublishedPostFeed = ({ item }) => {
                         value={item.Sliders[2]}
                         disabled={!isEditable} // Slidersarna blir inaktiverade när recensionen inte är i redigeringsläge
                     />
+                    <FontAwesome5 name="glass-cheers" size={15} color="#1B2156" />
+
+                    </View>
 
                 </View>
 
@@ -186,7 +199,19 @@ const styles = StyleSheet.create({
     disabled: {
         color: '#B4D6FF'
 
-    }
+    },
+    sliderHeart:{
+        marginBottom: 10,
+        marginLeft:10,
+    },
+    money:{
+        marginBottom: 10,
+        marginLeft:10,
+    },
+    glass:{
+        marginBottom: 10,
+        marginLeft:10,
+    },
 
 });
 
