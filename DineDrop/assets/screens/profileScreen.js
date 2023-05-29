@@ -125,7 +125,7 @@ export default function ProfileScreen() {
         </View>
       </View>
       <View>
-        <Text style={styles.myPins}>My pins</Text>
+        <Text style={styles.myPins}>My Drops</Text>
       </View>
       <View style={styles.container2}>
         <View style={{ flex: 3 }}>

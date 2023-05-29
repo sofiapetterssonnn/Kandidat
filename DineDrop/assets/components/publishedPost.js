@@ -153,6 +153,12 @@ const styles = StyleSheet.create({
     reviewText: {
         color: '#B4D6FF',
         fontSize: 18,
+        flex: 1,
+        //backgroundColor: 'black',
+        padding: 10,
+        height: 120,
+        marginTop: '5%',
+        marginLeft: '5%'
     },
     editButton: {
         position: 'absolute',
@@ -165,16 +171,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#B4D6FF',
         borderBottomWidth: 1,
     },
-    reviewText: {
-        flex: 1,
-        //  backgroundColor: '#fff',
-        padding: 10,
-        height: 120,
-        marginTop: '5%',
-        marginLeft: '10%'
 
-
-    },
     placeText: {
         // flex: 1,
         //backgroundColor: '#fff',
@@ -192,7 +189,7 @@ const styles = StyleSheet.create({
     },
     text: {
         flex: 1,
-        color: '#B4D6FF',
+        color: '#1B2156',
         fontSize: 15,
 
 
